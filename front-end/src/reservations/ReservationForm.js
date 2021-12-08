@@ -1,14 +1,21 @@
 import React from "react";
 
 const ReservationForm = () => {
+  //   const picker = document.getElementById("reservation_date");
+  //   picker.addEventListener("input", function (e) {
+  //     const day = new Date(this.value).getUTCDay();
+  //     if ([2].includes(day)) {
+  //       e.preventDefault();
+  //       this.value = "";
+  //       alert("We're not open on Tuesdays. Please choose a different day.");
+  //     }
+  //   });
+
   return (
     <div className="container">
       <h1>Create a New Reservation</h1>
       <form>
-        <div className="mb-3">
-          <label htmlFor="first_name" className="form-label">
-            First name
-          </label>
+        <div className="form-floating mb-3">
           <input
             type="text"
             name="first_name"
@@ -18,11 +25,11 @@ const ReservationForm = () => {
             placeholder={"Customer's first name"}
             required
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="last_name" className="form-label">
-            Last name
+          <label htmlFor="first_name" className="form-label">
+            First name
           </label>
+        </div>
+        <div className="form-floating mb-3">
           <input
             type="text"
             name="last_name"
@@ -32,11 +39,11 @@ const ReservationForm = () => {
             placeholder={"Customer's last name"}
             required
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="mobile_number" className="form-label">
-            Mobile Number
+          <label htmlFor="last_name" className="form-label">
+            Last name
           </label>
+        </div>
+        <div className="form-floating mb-3">
           <input
             type="tel"
             name="mobile_number"
@@ -48,25 +55,27 @@ const ReservationForm = () => {
             maxLength={12}
             required
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="reservation_date" className="form-label">
-            Reservation Date
+          <label htmlFor="mobile_number" className="form-label">
+            Mobile Number
           </label>
+          <div class="form-text mx-2">Use format 000-000-0000</div>
+        </div>
+        <div className="form-floating mb-3">
           <input
             type="date"
             name="reservation_date"
             className="form-control"
             id="reservation_date"
             placeholder="YYYY-MM-DD"
+            min={new Date().toISOString().split("T")[0]}
             pattern="\d{4}-\d{2}-\d{2}"
             required
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="reservation_time" className="form-label">
-            Reservation Time
+          <label htmlFor="reservation_date" className="form-label">
+            Reservation Date
           </label>
+        </div>
+        <div className="form-floating mb-3">
           <input
             type="time"
             name="reservation_time"
@@ -76,11 +85,11 @@ const ReservationForm = () => {
             pattern="[0-9]{2}:[0-9]{2}"
             required
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="people" className="form-label">
-            Number of guests in party
+          <label htmlFor="reservation_time" className="form-label">
+            Reservation Time
           </label>
+        </div>
+        <div className="form-floating mb-3">
           <input
             type="number"
             name="people"
@@ -89,6 +98,9 @@ const ReservationForm = () => {
             placeholder="1"
             required
           />
+          <label htmlFor="people" className="form-label">
+            Number of guests in party
+          </label>
         </div>
         <div className="row">
           <div className="col-auto pr-0 mr-2">
