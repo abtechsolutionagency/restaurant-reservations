@@ -48,6 +48,41 @@ const hasMobileNumber = (req, res, next) => {
   });
 };
 
+const hasReservationDate = (req, res, next) => {
+  const { data: { reservation_date } = {} } = req.body;
+  const validDate = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+  if (reservation_date && reservation_date.match(validDate)) {
+    return next();
+  }
+  next({
+    status: 400,
+    message: "A valid 'reservation_date' is required",
+  });
+};
+
+const hasReservationTime = (req, res, next) => {
+  const { data: { reservation_time } = {} } = req.body;
+  const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+  if (reservation_time && reservation_time.match(validTime)) {
+    return next();
+  }
+  next({
+    status: 400,
+    message: "A valid 'reservation_time' is required",
+  });
+};
+
+const hasPeople = (req, res, next) => {
+  const { data: { people } = {} } = req.body;
+  if (people && people !== "" && typeof people === "number" && people >= 1) {
+    return next();
+  }
+  next({
+    status: 400,
+    message: "A valid number of 'people' is required",
+  });
+};
+
 /**
  * List handler for reservation resources
  */
@@ -72,6 +107,9 @@ module.exports = {
     hasFirstName,
     hasLastName,
     hasMobileNumber,
+    hasReservationDate,
+    hasReservationTime,
+    hasPeople,
     asyncErrorBoundary(create),
   ],
   list: asyncErrorBoundary(list),

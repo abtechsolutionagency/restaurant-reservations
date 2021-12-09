@@ -29,15 +29,7 @@ const CreateReservation = () => {
   };
 
   const handleReservationDateChange = event => {
-    const day = new Date(event.target.value).getUTCDay();
-    if ([2].includes(day)) {
-      setError({
-        message: "We're not open on Tuesdays. Please choose a different day.",
-      });
-    } else {
-      setReservation({ ...reservation, reservation_date: event.target.value });
-      setError(null);
-    }
+    setReservation({ ...reservation, reservation_date: event.target.value });
   };
 
   const handleReservationTimeChange = event => {
