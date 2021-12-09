@@ -1,6 +1,14 @@
 import React from "react";
 
-const ReservationForm = () => {
+const ReservationForm = ({
+  reservation,
+  handleFirstNameChange,
+  handleLastNameChange,
+  handleMobileNumberChange,
+  handleReservationDateChange,
+  handleReservationTimeChange,
+  handlePeopleNumberChange,
+}) => {
   //   const picker = document.getElementById("reservation_date");
   //   picker.addEventListener("input", function (e) {
   //     const day = new Date(this.value).getUTCDay();
@@ -23,6 +31,8 @@ const ReservationForm = () => {
             id="first_name"
             autoComplete={"off"}
             placeholder={"Customer's first name"}
+            value={reservation.first_name}
+            onChange={handleFirstNameChange}
             required
           />
           <label htmlFor="first_name" className="form-label">
@@ -37,6 +47,8 @@ const ReservationForm = () => {
             id="last_name"
             autoComplete={"off"}
             placeholder={"Customer's last name"}
+            value={reservation.last_name}
+            onChange={handleLastNameChange}
             required
           />
           <label htmlFor="last_name" className="form-label">
@@ -53,6 +65,8 @@ const ReservationForm = () => {
             autoComplete={"off"}
             placeholder={"123-456-7890"}
             maxLength={12}
+            value={reservation.mobile_number}
+            onChange={handleMobileNumberChange}
             required
           />
           <label htmlFor="mobile_number" className="form-label">
@@ -69,6 +83,8 @@ const ReservationForm = () => {
             placeholder="YYYY-MM-DD"
             min={new Date().toISOString().split("T")[0]}
             pattern="\d{4}-\d{2}-\d{2}"
+            value={reservation.reservation_date}
+            onChange={handleReservationDateChange}
             required
           />
           <label htmlFor="reservation_date" className="form-label">
@@ -83,6 +99,8 @@ const ReservationForm = () => {
             id="reservation_time"
             placeholder="HH:MM"
             pattern="[0-9]{2}:[0-9]{2}"
+            value={reservation.reservation_time}
+            onChange={handleReservationTimeChange}
             required
           />
           <label htmlFor="reservation_time" className="form-label">
@@ -96,6 +114,8 @@ const ReservationForm = () => {
             className="form-control"
             id="people"
             placeholder="1"
+            value={reservation.people}
+            onChange={handlePeopleNumberChange}
             required
           />
           <label htmlFor="people" className="form-label">
