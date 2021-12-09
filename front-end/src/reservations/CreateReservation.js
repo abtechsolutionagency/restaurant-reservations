@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReservationForm from "./ReservationForm";
+import { createReservation } from "../utils/api";
 
 const CreateReservation = () => {
   const history = useHistory();
@@ -47,9 +48,14 @@ const CreateReservation = () => {
     setReservation({ ...reservation, people: Math.max(1, event.target.value) });
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    history.push("/reservations");
+    try {
+      await createReservation(reservation);
+      history.push("/");
+    } catch (error) {
+      setError(error);
+    }
   };
 
   return (
