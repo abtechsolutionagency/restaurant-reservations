@@ -49,7 +49,6 @@ const CreateReservation = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log("submitted", reservation);
     history.push("/reservations");
   };
 
