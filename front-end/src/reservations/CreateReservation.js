@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import ReservationForm from "./ReservationForm";
 
 const CreateReservation = () => {
+  const history = useHistory();
+
   const [reservation, setReservation] = useState({
     first_name: "",
     last_name: "",
@@ -44,6 +47,12 @@ const CreateReservation = () => {
     setReservation({ ...reservation, people: Math.max(1, event.target.value) });
   };
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    console.log("submitted", reservation);
+    history.push("/reservations");
+  };
+
   return (
     <>
       <ReservationForm
@@ -55,6 +64,7 @@ const CreateReservation = () => {
         handleReservationDateChange={handleReservationDateChange}
         handleReservationTimeChange={handleReservationTimeChange}
         handlePeopleNumberChange={handlePeopleNumberChange}
+        handleSubmit={handleSubmit}
       />
     </>
   );

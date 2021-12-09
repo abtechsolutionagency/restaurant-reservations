@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 
 const ReservationForm = ({
@@ -10,12 +11,17 @@ const ReservationForm = ({
   handleReservationDateChange,
   handleReservationTimeChange,
   handlePeopleNumberChange,
+  handleSubmit,
 }) => {
+  const history = useHistory();
+
+  const handleCancel = () => history.goBack();
+
   return (
     <div className="container">
       <ErrorAlert error={error} />
       <h1>Create a New Reservation</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-floating mb-3">
           <input
             type="text"
@@ -117,10 +123,14 @@ const ReservationForm = ({
         </div>
         <div className="row">
           <div className="col-auto pr-0 mr-2">
-            <button className="btn btn-secondary">Cancel</button>
+            <button className="btn btn-secondary" onClick={handleCancel}>
+              Cancel
+            </button>
           </div>
           <div className="col-auto px-0">
-            <button className="btn btn-primary">Submit</button>
+            <button className="btn btn-primary" type="submit">
+              Submit
+            </button>
           </div>
         </div>
       </form>
