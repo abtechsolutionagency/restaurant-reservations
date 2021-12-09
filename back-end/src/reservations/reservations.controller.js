@@ -87,8 +87,9 @@ const hasPeople = (req, res, next) => {
  * List handler for reservation resources
  */
 const list = async (req, res) => {
+  const date = req.query.date;
   res.json({
-    data: [],
+    data: await service.list(date),
   });
 };
 

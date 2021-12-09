@@ -7,6 +7,14 @@ const create = newReservation => {
     .then(reservationData => reservationData[0]);
 };
 
+const list = async date => {
+  return knex("reservations")
+    .select("*")
+    .where({ reservation_date: date })
+    .orderBy("reservation_time");
+};
+
 module.exports = {
   create,
+  list,
 };
