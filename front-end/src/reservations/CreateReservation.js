@@ -10,6 +10,7 @@ const CreateReservation = () => {
     reservation_time: "",
     people: 1,
   });
+  const [error, setError] = useState(null);
 
   const handleFirstNameChange = event => {
     setReservation({ ...reservation, first_name: event.target.value });
@@ -24,7 +25,15 @@ const CreateReservation = () => {
   };
 
   const handleReservationDateChange = event => {
-    setReservation({ ...reservation, reservation_date: event.target.value });
+    const day = new Date(event.target.value).getUTCDay();
+    if ([2].includes(day)) {
+      setError({
+        message: "We're not open on Tuesdays. Please choose a different day.",
+      });
+    } else {
+      setReservation({ ...reservation, reservation_date: event.target.value });
+      setError(null);
+    }
   };
 
   const handleReservationTimeChange = event => {
@@ -39,6 +48,7 @@ const CreateReservation = () => {
     <>
       <ReservationForm
         reservation={reservation}
+        error={error}
         handleFirstNameChange={handleFirstNameChange}
         handleLastNameChange={handleLastNameChange}
         handleMobileNumberChange={handleMobileNumberChange}

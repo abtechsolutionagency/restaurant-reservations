@@ -1,7 +1,9 @@
 import React from "react";
+import ErrorAlert from "../layout/ErrorAlert";
 
 const ReservationForm = ({
   reservation,
+  error,
   handleFirstNameChange,
   handleLastNameChange,
   handleMobileNumberChange,
@@ -9,18 +11,9 @@ const ReservationForm = ({
   handleReservationTimeChange,
   handlePeopleNumberChange,
 }) => {
-  //   const picker = document.getElementById("reservation_date");
-  //   picker.addEventListener("input", function (e) {
-  //     const day = new Date(this.value).getUTCDay();
-  //     if ([2].includes(day)) {
-  //       e.preventDefault();
-  //       this.value = "";
-  //       alert("We're not open on Tuesdays. Please choose a different day.");
-  //     }
-  //   });
-
   return (
     <div className="container">
+      <ErrorAlert error={error} />
       <h1>Create a New Reservation</h1>
       <form>
         <div className="form-floating mb-3">
