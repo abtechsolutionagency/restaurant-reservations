@@ -3,6 +3,7 @@ import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationList from "./ReservationList";
 import DateSelector from "./DateSelector";
+import useQuery from "../utils/useQuery";
 
 /**
  * Defines the dashboard page.
@@ -13,6 +14,11 @@ import DateSelector from "./DateSelector";
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+  const query = useQuery();
+
+  if (query.get("date")) {
+    date = query.get("date");
+  }
 
   useEffect(loadDashboard, [date]);
 
@@ -30,11 +36,13 @@ function Dashboard({ date }) {
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
         <DateSelector />
+      </div>
+      <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
-      <ReservationList />
-      {JSON.stringify(reservations)}
+      <ReservationList reservations={reservations} />
+      {/* {JSON.stringify(reservations)} */}
     </main>
   );
 }

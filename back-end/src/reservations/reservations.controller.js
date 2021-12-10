@@ -38,7 +38,8 @@ const hasLastName = (req, res, next) => {
 
 const hasMobileNumber = (req, res, next) => {
   const { data: { mobile_number } = {} } = req.body;
-  const validPhoneNumber = /^\(?[0-9]{3}\)?[-]{1}?[0-9]{3}[-]{1}?[0-9]{4}$/;
+  const validPhoneNumber =
+    /^[+]?(?=(?:[^\dx]*\d){7})(?:\(\d+(?:\.\d+)?\)|\d+(?:\.\d+)?)(?:[ -]?(?:\(\d+(?:\.\d+)?\)|\d+(?:\.\d+)?))*(?:[ ]?(?:x|ext)\.?[ ]?\d{1,5})?$/;
   if (mobile_number && mobile_number.match(validPhoneNumber)) {
     return next();
   }

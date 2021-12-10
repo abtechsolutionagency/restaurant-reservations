@@ -44,7 +44,7 @@ const CreateReservation = () => {
     event.preventDefault();
     try {
       await createReservation(reservation);
-      history.push("/");
+      history.push(`/dashboard?date=${reservation.reservation_date}`);
     } catch (error) {
       setError(error);
     }
