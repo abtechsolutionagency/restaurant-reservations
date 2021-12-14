@@ -53,12 +53,39 @@ const hasReservationDate = (req, res, next) => {
   const { data: { reservation_date } = {} } = req.body;
   const validDate = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
   if (reservation_date && reservation_date.match(validDate)) {
+    res.locals.reservation_date = reservation_date;
     return next();
   }
   next({
     status: 400,
     message: "A valid 'reservation_date' is required",
   });
+};
+
+function asDateString(date) {
+  return `${date.getFullYear().toString(10)}-${(date.getMonth() + 1)
+    .toString(10)
+    .padStart(2, "0")}-${date.getDate().toString(10).padStart(2, "0")}`;
+}
+
+const hasValidDate = (req, res, next) => {
+  const today = asDateString(new Date()).replace("-", "");
+  const resDateString = res.locals.reservation_date.replace("-", "");
+  const day = new Date(res.locals.reservation_date).getUTCDay();
+  if ([2].includes(day)) {
+    next({
+      status: 400,
+      message:
+        "Restuarant is closed on Tuesdays. Please choose a different day.",
+    });
+  }
+  if (resDateString < today) {
+    next({
+      status: 400,
+      message: "Reservation must be for a future date.",
+    });
+  }
+  next();
 };
 
 const hasReservationTime = (req, res, next) => {
@@ -110,6 +137,7 @@ module.exports = {
     hasLastName,
     hasMobileNumber,
     hasReservationDate,
+    hasValidDate,
     hasReservationTime,
     hasPeople,
     asyncErrorBoundary(create),
