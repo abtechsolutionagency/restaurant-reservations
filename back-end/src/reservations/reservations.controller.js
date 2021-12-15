@@ -2,6 +2,20 @@ const service = require("./reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 /**
+ * Global variable declarations
+ */
+const today = asDateString(new Date()).replace("-", "");
+const currentTime = new Date()
+  .toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })
+  .replace(":", "");
+const resTimeLowerLimit = "1030";
+const resTimeUpperLimit = "1730";
+
+/**
  * Middleware to check that body has data
  */
 const hasData = (req, res, next) => {
@@ -68,8 +82,7 @@ function asDateString(date) {
     .padStart(2, "0")}-${date.getDate().toString(10).padStart(2, "0")}`;
 }
 
-const hasValidDate = (req, res, next) => {
-  const today = asDateString(new Date()).replace("-", "");
+const hasValidReservationDate = (req, res, next) => {
   const resDateString = res.locals.reservation_date.replace("-", "");
   const day = new Date(res.locals.reservation_date).getUTCDay();
   if ([2].includes(day)) {
@@ -92,11 +105,34 @@ const hasReservationTime = (req, res, next) => {
   const { data: { reservation_time } = {} } = req.body;
   const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
   if (reservation_time && reservation_time.match(validTime)) {
+    res.locals.reservation_time = reservation_time;
     return next();
   }
   next({
     status: 400,
     message: "A valid 'reservation_time' is required",
+  });
+};
+
+const hasValidReservationTime = (req, res, next) => {
+  const resDateString = res.locals.reservation_date.replace("-", "");
+  const resTimeString = res.locals.reservation_time.replace(":", "");
+
+  if (resDateString === today && resTimeString < currentTime) {
+    next({
+      status: 400,
+      message: "Reservations for today must be in the future",
+    });
+  }
+  if (
+    resTimeString >= resTimeLowerLimit &&
+    resTimeString <= resTimeUpperLimit
+  ) {
+    return next();
+  }
+  next({
+    status: 400,
+    message: "Reservations must be between 10:30 AM and 9:30 PM",
   });
 };
 
@@ -137,8 +173,9 @@ module.exports = {
     hasLastName,
     hasMobileNumber,
     hasReservationDate,
-    hasValidDate,
+    hasValidReservationDate,
     hasReservationTime,
+    hasValidReservationTime,
     hasPeople,
     asyncErrorBoundary(create),
   ],
