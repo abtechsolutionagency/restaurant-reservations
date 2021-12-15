@@ -30,6 +30,7 @@ const ReservationList = ({ date, reservations }) => {
           return (
             <div key={reservation_id}>
               <ReservationListItem
+                reservation_id={reservation_id}
                 firstName={first_name}
                 lastName={last_name}
                 mobile_number={mobile_number}

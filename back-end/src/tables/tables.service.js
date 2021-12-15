@@ -7,6 +7,11 @@ const create = newTable => {
     .then(tableData => tableData[0]);
 };
 
+const list = async () => {
+  return knex("tables").select("*").orderBy("table_name");
+};
+
 module.exports = {
   create,
+  list,
 };

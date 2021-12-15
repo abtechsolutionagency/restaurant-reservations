@@ -70,7 +70,6 @@ const ReservationForm = ({
           <label htmlFor="mobile_number" className="form-label">
             Mobile Number
           </label>
-          <div className="form-text mx-2">Use format 000-000-0000</div>
         </div>
         <div className="form-floating mb-3">
           <input

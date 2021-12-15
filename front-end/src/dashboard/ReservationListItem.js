@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ReservationListItem = ({
+  reservation_id,
   firstName,
   lastName,
   mobile_number,
@@ -43,6 +45,11 @@ const ReservationListItem = ({
           <strong>People in Party: </strong>
           {people}
         </p>
+      </div>
+      <div>
+        <Link to={`/reservations/${reservation_id}/seat`}>
+          <button>Seat</button>
+        </Link>
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ const CreateTable = () => {
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      //   await createTable(table);
+      await createTable(table);
       history.push("/dashboard");
     } catch (error) {
       setError(error);

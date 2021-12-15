@@ -38,6 +38,15 @@ const hasCapacity = (req, res, next) => {
 };
 
 /**
+ * List handler for reservation resources
+ */
+const list = async (req, res) => {
+  res.json({
+    data: await service.list(),
+  });
+};
+
+/**
  *  Create handler for new reservations
  */
 
@@ -47,5 +56,6 @@ const create = async (req, res) => {
 };
 
 module.exports = {
+  list: asyncErrorBoundary(list),
   create: [hasData, hasTableName, hasCapacity, asyncErrorBoundary(create)],
 };
