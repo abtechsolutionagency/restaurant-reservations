@@ -137,7 +137,6 @@ const hasValidReservationTime = (req, res, next) => {
 
 const hasValidSameDayReservation = (req, res, next) => {
   const resDateString = res.locals.reservation_date.replace(/[-]/g, "");
-
   if (resDateString === today && res.locals.reservation_time <= currentTime) {
     next({
       status: 400,
