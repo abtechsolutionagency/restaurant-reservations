@@ -2,16 +2,22 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 
-const TableForm = ({ error }) => {
+const TableForm = ({
+  table,
+  error,
+  handleTableNameChange,
+  handleCapacityChange,
+  handleSubmit,
+}) => {
   const history = useHistory();
 
   const handleCancel = () => history.goBack();
 
   return (
     <div className="container">
-      {/* <ErrorAlert error={error} /> */}
+      <ErrorAlert error={error} />
       <h1>Create a New Table</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-floating mb-3">
           <input
             type="text"
@@ -20,6 +26,8 @@ const TableForm = ({ error }) => {
             id="table_name"
             autoComplete={"off"}
             placeholder={"Table Name"}
+            value={table.table_name}
+            onChange={handleTableNameChange}
             required
           />
           <label htmlFor="table_name" className="form-label">
@@ -34,6 +42,8 @@ const TableForm = ({ error }) => {
             className="form-control"
             id="capacity"
             placeholder="1"
+            value={table.capacity}
+            onChange={handleCapacityChange}
             required
           />
           <label htmlFor="capacity" className="form-label">
