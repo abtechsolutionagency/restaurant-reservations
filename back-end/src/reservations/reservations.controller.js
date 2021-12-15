@@ -2,9 +2,23 @@ const service = require("./reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 /**
+ * Formats a Date object as YYYY-MM-DD.
+ *
+ * @param date
+ *  an instance of a date object
+ * @returns {string}
+ *  the specified Date formatted as YYYY-MM-DD
+ */
+const asDateString = date => {
+  return `${date.getFullYear().toString(10)}-${(date.getMonth() + 1)
+    .toString(10)
+    .padStart(2, "0")}-${date.getDate().toString(10).padStart(2, "0")}`;
+};
+
+/**
  * Global variable declarations
  */
-const today = asDateString(new Date()).replace("-", "");
+const today = asDateString(new Date()).replace(/[-]/g, "");
 const currentTime = new Date()
   .toLocaleTimeString([], {
     hour: "2-digit",
@@ -76,14 +90,8 @@ const hasReservationDate = (req, res, next) => {
   });
 };
 
-function asDateString(date) {
-  return `${date.getFullYear().toString(10)}-${(date.getMonth() + 1)
-    .toString(10)
-    .padStart(2, "0")}-${date.getDate().toString(10).padStart(2, "0")}`;
-}
-
 const hasValidReservationDate = (req, res, next) => {
-  const resDateString = res.locals.reservation_date.replace("-", "");
+  const resDateString = res.locals.reservation_date.replace(/[-]/g, "");
   const day = new Date(res.locals.reservation_date).getUTCDay();
   if ([2].includes(day)) {
     next({
@@ -105,7 +113,7 @@ const hasReservationTime = (req, res, next) => {
   const { data: { reservation_time } = {} } = req.body;
   const validTime = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
   if (reservation_time && reservation_time.match(validTime)) {
-    res.locals.reservation_time = reservation_time;
+    res.locals.reservation_time = reservation_time.replace(":", "");
     return next();
   }
   next({
@@ -115,18 +123,9 @@ const hasReservationTime = (req, res, next) => {
 };
 
 const hasValidReservationTime = (req, res, next) => {
-  const resDateString = res.locals.reservation_date.replace("-", "");
-  const resTimeString = res.locals.reservation_time.replace(":", "");
-
-  if (resDateString === today && resTimeString < currentTime) {
-    next({
-      status: 400,
-      message: "Reservations for today must be in the future",
-    });
-  }
   if (
-    resTimeString >= resTimeLowerLimit &&
-    resTimeString <= resTimeUpperLimit
+    res.locals.reservation_time >= resTimeLowerLimit &&
+    res.locals.reservation_time <= resTimeUpperLimit
   ) {
     return next();
   }
@@ -134,6 +133,18 @@ const hasValidReservationTime = (req, res, next) => {
     status: 400,
     message: "Reservations must be between 10:30 AM and 9:30 PM",
   });
+};
+
+const hasValidSameDayReservation = (req, res, next) => {
+  const resDateString = res.locals.reservation_date.replace(/[-]/g, "");
+
+  if (resDateString === today && res.locals.reservation_time <= currentTime) {
+    next({
+      status: 400,
+      message: `Reservations for today must be in the future`,
+    });
+  }
+  return next();
 };
 
 const hasPeople = (req, res, next) => {
@@ -175,6 +186,7 @@ module.exports = {
     hasReservationDate,
     hasValidReservationDate,
     hasReservationTime,
+    hasValidSameDayReservation,
     hasValidReservationTime,
     hasPeople,
     asyncErrorBoundary(create),
