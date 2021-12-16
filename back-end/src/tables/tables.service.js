@@ -23,8 +23,7 @@ const update = updatedTable => {
   return knex("tables")
     .select("*")
     .where({ table_id: updatedTable.table_id })
-    .update(updatedTable, "*")
-    .then(tableData => tableData[0]);
+    .update(updatedTable, "*");
 };
 
 module.exports = {

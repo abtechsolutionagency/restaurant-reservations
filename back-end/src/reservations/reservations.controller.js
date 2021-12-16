@@ -172,9 +172,16 @@ const list = async (req, res) => {
  * Read handler for reservation
  */
 
-const read = async (req, res) => {
-  const reservation_id = req.params.reservationId;
-  res.json({ data: await service.read(reservation_id) });
+const read = async (req, res, next) => {
+  const { reservation_id } = req.params;
+  const data = await service.read(reservation_id);
+  if (data) {
+    res.json({ data });
+  }
+  next({
+    status: 404,
+    message: `Reservation ID ${reservation_id} does not exist.`,
+  });
 };
 
 /**

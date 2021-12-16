@@ -115,8 +115,8 @@ const update = async (req, res, next) => {
     ...req.body.data,
     table_id,
   };
-  const data = await service.update(updatedTable);
-  res.status(200).json({ data });
+  await service.update(updatedTable);
+  res.sendStatus(200);
 };
 
 module.exports = {
