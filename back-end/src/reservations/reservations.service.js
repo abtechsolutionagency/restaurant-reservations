@@ -14,7 +14,12 @@ const list = async date => {
     .orderBy("reservation_time");
 };
 
+const read = async reservation_id => {
+  return knex("reservations").select("*").where({ reservation_id }).first();
+};
+
 module.exports = {
   create,
   list,
+  read,
 };

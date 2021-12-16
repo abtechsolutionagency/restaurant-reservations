@@ -13,7 +13,7 @@ const SeatReservation = () => {
   useEffect(loadTables, []);
   useEffect(() => {
     const abortController = new AbortController();
-    setReservation(null);
+    setReservationError(null);
     getReservation(reservationId, abortController.signal)
       .then(setReservation)
       .catch(setReservationError);
@@ -31,15 +31,19 @@ const SeatReservation = () => {
     <div className="container">
       <ErrorAlert error={reservationError} />
       <ErrorAlert error={tablesError} />
-      <h1>Seat Reservation for {reservationId}</h1>
-      <form>
-        <label htmlFor="table_id">Choose a table to seat</label>
-        <select id="table_id" name="table_id">
-          {tables.map(table => {
-            return <option value={table.table_id}>{table.table_name}</option>;
-          })}
-        </select>
-      </form>
+      <div>
+        <h1>
+          Seat Reservation for {reservation.first_name} {reservation.last_name}
+        </h1>
+        <form>
+          <label htmlFor="table_id">Choose a table to seat</label>
+          <select id="table_id" name="table_id">
+            {tables.map(table => {
+              return <option value={table.table_id}>{table.table_name}</option>;
+            })}
+          </select>
+        </form>
+      </div>
     </div>
   );
 };

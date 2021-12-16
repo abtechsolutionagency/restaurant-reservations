@@ -168,7 +168,17 @@ const list = async (req, res) => {
 };
 
 /**
- *  Create handler for new reservations
+ *
+ * Read handler for reservation
+ */
+
+const read = async (req, res) => {
+  const reservation_id = req.params.reservationId;
+  res.json({ data: await service.read(reservation_id) });
+};
+
+/**
+ *  Create handler for new reservation
  */
 
 const create = async (req, res) => {
@@ -191,4 +201,5 @@ module.exports = {
     asyncErrorBoundary(create),
   ],
   list: asyncErrorBoundary(list),
+  read: asyncErrorBoundary(read),
 };
