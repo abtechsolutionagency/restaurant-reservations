@@ -7,14 +7,14 @@ const create = newReservation => {
     .then(reservationData => reservationData[0]);
 };
 
-const list = async date => {
+const list = date => {
   return knex("reservations")
     .select("*")
     .where({ reservation_date: date })
     .orderBy("reservation_time");
 };
 
-const read = async reservation_id => {
+const read = reservation_id => {
   return knex("reservations").select("*").where({ reservation_id }).first();
 };
 

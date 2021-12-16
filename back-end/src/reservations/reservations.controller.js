@@ -27,7 +27,7 @@ const currentTime = new Date()
   })
   .replace(":", "");
 const resTimeLowerLimit = "1030";
-const resTimeUpperLimit = "1730";
+const resTimeUpperLimit = "2130";
 
 /**
  * Middleware to check that body has data

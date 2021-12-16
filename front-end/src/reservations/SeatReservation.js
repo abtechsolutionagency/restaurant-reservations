@@ -11,19 +11,21 @@ const SeatReservation = () => {
   const [tablesError, setTablesError] = useState(null);
 
   useEffect(loadTables, []);
-  useEffect(() => {
-    const abortController = new AbortController();
-    setReservationError(null);
-    getReservation(reservationId, abortController.signal)
-      .then(setReservation)
-      .catch(setReservationError);
-    return () => abortController.abort();
-  }, [reservationId]);
+  useEffect(loadReservations, [reservationId]);
 
   function loadTables() {
     const abortController = new AbortController();
     setTablesError(null);
     listTables(abortController.signal).then(setTables).catch(setTablesError);
+    return () => abortController.abort();
+  }
+
+  function loadReservations() {
+    const abortController = new AbortController();
+    setReservationError(null);
+    getReservation(reservationId, abortController.signal)
+      .then(setReservation)
+      .catch(setReservationError);
     return () => abortController.abort();
   }
 
@@ -39,9 +41,23 @@ const SeatReservation = () => {
           <label htmlFor="table_id">Choose a table to seat</label>
           <select id="table_id" name="table_id">
             {tables.map(table => {
-              return <option value={table.table_id}>{table.table_name}</option>;
+              return (
+                <option value={table.table_id}>
+                  {table.table_name} - {table.capacity} seats
+                </option>
+              );
             })}
           </select>
+          <div className="row">
+            <div className="col-auto pr-0 mr-2">
+              <button className="btn btn-secondary">Cancel</button>
+            </div>
+            <div className="col-auto px-0">
+              <button className="btn btn-primary" type="submit">
+                Submit
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
