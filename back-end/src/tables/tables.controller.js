@@ -66,7 +66,7 @@ const reservationExists = async (req, res, next) => {
   });
 };
 
-const tableHasValidStatus = async (req, res, next) => {
+const tableIsUnoccupied = async (req, res, next) => {
   const { table_id } = req.params;
   const foundTable = await service.readTable(table_id);
   if (foundTable.reservation_id === null) {
@@ -93,6 +93,33 @@ const tableHasValidCapacity = (req, res, next) => {
 };
 
 /**
+ * Validation Middleware for finish table requests
+ */
+const tableExists = async (req, res, next) => {
+  const { table_id } = req.params;
+  const foundTable = await service.readTable(table_id);
+  if (foundTable) {
+    res.locals.table = foundTable;
+    return next();
+  }
+  next({
+    status: 404,
+    message: `Table ${table_id} does not exist`,
+  });
+};
+
+const tableIsOccupied = async (req, res, next) => {
+  const table = res.locals.table;
+  if (table.reservation_id !== null) {
+    return next();
+  }
+  next({
+    status: 400,
+    message: "Selected table is not occupied.",
+  });
+};
+
+/**
  * List handler for tables resources
  */
 const list = async (req, res) => {
@@ -109,6 +136,9 @@ const create = async (req, res) => {
   res.status(201).json({ data: newTable });
 };
 
+/**
+ *  Update handler for 'seating' reservation to table
+ */
 const update = async (req, res, next) => {
   const { table_id } = res.locals.table;
   const updatedTable = {
@@ -119,6 +149,15 @@ const update = async (req, res, next) => {
   res.status(200).json({ data: updatedTable });
 };
 
+/**
+ *  Finish handler for removing reservation from table
+ */
+const finish = async (req, res, next) => {
+  const { table_id } = res.locals.table;
+  const emptyTable = await service.finish(table_id);
+  res.status(200).json({ data: emptyTable });
+};
+
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [hasData, hasTableName, hasCapacity, asyncErrorBoundary(create)],
@@ -126,8 +165,13 @@ module.exports = {
     hasData,
     hasReservationId,
     asyncErrorBoundary(reservationExists),
-    asyncErrorBoundary(tableHasValidStatus),
+    asyncErrorBoundary(tableIsUnoccupied),
     tableHasValidCapacity,
     asyncErrorBoundary(update),
+  ],
+  finish: [
+    asyncErrorBoundary(tableExists),
+    asyncErrorBoundary(tableIsOccupied),
+    asyncErrorBoundary(finish),
   ],
 };
