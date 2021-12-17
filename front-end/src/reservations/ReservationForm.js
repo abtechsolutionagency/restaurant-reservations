@@ -15,8 +15,6 @@ const ReservationForm = ({
 }) => {
   const history = useHistory();
 
-  const handleCancel = () => history.goBack();
-
   return (
     <div className="container">
       <ErrorAlert error={error} />
@@ -120,7 +118,10 @@ const ReservationForm = ({
         </div>
         <div className="row">
           <div className="col-auto pr-0 mr-2">
-            <button className="btn btn-secondary" onClick={handleCancel}>
+            <button
+              className="btn btn-secondary"
+              onClick={() => history.goBack()}
+            >
               Cancel
             </button>
           </div>

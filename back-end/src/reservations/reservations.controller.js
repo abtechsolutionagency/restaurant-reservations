@@ -176,7 +176,7 @@ const read = async (req, res, next) => {
   const { reservation_id } = req.params;
   const data = await service.read(reservation_id);
   if (data) {
-    res.json({ data });
+    return res.json({ data });
   }
   next({
     status: 404,

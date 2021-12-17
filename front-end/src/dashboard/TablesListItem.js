@@ -2,7 +2,7 @@ import React from "react";
 
 const TablesListItem = ({ table }) => {
   const getSeated = () => {
-    return table.reservation ? "Occupied" : "Free";
+    return table.reservation_id ? "Occupied" : "Free";
   };
 
   return (

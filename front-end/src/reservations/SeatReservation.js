@@ -1,33 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
-import { getReservation, listTables } from "../utils/api";
+import { getReservation, listTables, updateTable } from "../utils/api";
 
 const SeatReservation = () => {
-  const { reservationId } = useParams();
+  const { reservation_id } = useParams();
   const history = useHistory();
 
-  const [Error, setError] = useState(null);
   const [reservation, setReservation] = useState({});
+  const [reservationError, setReservationError] = useState(null);
   const [tables, setTables] = useState([]);
+  const [tablesError, setTablesError] = useState(null);
   const [selectedTable, setSelectedTable] = useState("");
+  const [selectedTableError, setSelectedTableError] = useState(null);
 
   useEffect(loadTables, []);
-  useEffect(loadReservations, [reservationId]);
+  useEffect(loadReservations, [reservation_id]);
 
   function loadTables() {
     const abortController = new AbortController();
-    setError(null);
-    listTables(abortController.signal).then(setTables).catch(setError);
+    setTablesError(null);
+    listTables(abortController.signal).then(setTables).catch(setTablesError);
     return () => abortController.abort();
   }
 
   function loadReservations() {
     const abortController = new AbortController();
-    setError(null);
-    getReservation(reservationId, abortController.signal)
+    setReservationError(null);
+    getReservation(reservation_id, abortController.signal)
       .then(setReservation)
-      .catch(setError);
+      .catch(setReservationError);
     return () => abortController.abort();
   }
 
@@ -35,17 +37,21 @@ const SeatReservation = () => {
 
   const handleCancel = () => history.goBack();
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    if (selectedTable === "") {
-      return setError("Please select a table");
+    try {
+      await updateTable(selectedTable, reservation_id);
+      history.push("/");
+    } catch (error) {
+      setSelectedTableError(error);
     }
-    console.log("Submitted", selectedTable, reservationId);
   };
 
   return (
     <div className="container">
-      <ErrorAlert error={Error} />
+      <ErrorAlert error={reservationError} />
+      <ErrorAlert error={tablesError} />
+      <ErrorAlert error={selectedTableError} />
       <div>
         <h1>
           Seat Reservation for {reservation.first_name} {reservation.last_name}
@@ -64,7 +70,7 @@ const SeatReservation = () => {
             {tables.map(table => {
               return (
                 <option key={table.table_id} value={table.table_id}>
-                  {table.table_name} - {table.capacity} seats
+                  {table.table_name} - {table.capacity}
                 </option>
               );
             })}
