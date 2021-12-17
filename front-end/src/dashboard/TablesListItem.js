@@ -1,10 +1,6 @@
 import React from "react";
 
-const TablesListItem = ({ table }) => {
-  const getSeated = () => {
-    return table.reservation_id ? "Occupied" : "Free";
-  };
-
+const TablesListItem = ({ table, finishButtonHandler }) => {
   return (
     <div className="card p-3 mb-3">
       <div>
@@ -20,7 +16,18 @@ const TablesListItem = ({ table }) => {
         </p>
       </div>
       <div>
-        <p data-table-id-status={table.table_id}>{getSeated()}</p>
+        <p data-table-id-status={table.table_id}>
+          {table.reservation_id ? "Occupied" : "Free"}
+        </p>
+      </div>
+      <div>
+        <button
+          data-table-id-finish={table.table_id}
+          hidden={!table.reservation_id}
+          onClick={() => finishButtonHandler(table.table_id)}
+        >
+          Finish
+        </button>
       </div>
     </div>
   );

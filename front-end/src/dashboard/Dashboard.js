@@ -58,6 +58,17 @@ function Dashboard({ date }) {
     history.push(`/dashboard?date=${nextDay}`);
   };
 
+  const finishButtonHandler = async id => {
+    const confirm = window.confirm(
+      "Is this table ready to seat new guests?\n\nThis cannot be undone."
+    );
+    if (confirm) {
+      // await finishTable(id);
+      const tables = await listTables();
+      setTables(tables);
+    }
+  };
+
   return (
     <main>
       <h1 className="mb-4">Dashboard</h1>
@@ -112,7 +123,7 @@ function Dashboard({ date }) {
         reservations={reservations}
       />
       <ErrorAlert error={tablesError} />
-      <TablesList tables={tables} />
+      <TablesList tables={tables} finishButtonHandler={finishButtonHandler} />
     </main>
   );
 }
