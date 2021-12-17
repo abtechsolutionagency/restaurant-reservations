@@ -104,7 +104,7 @@ const hasValidReservationDate = (req, res, next) => {
   if (resDateString < today) {
     next({
       status: 400,
-      message: `Reservation ${resDateString} must be for a future date. Today - ${today}`,
+      message: `Reservation must be for a future date.`,
     });
   }
   next();
