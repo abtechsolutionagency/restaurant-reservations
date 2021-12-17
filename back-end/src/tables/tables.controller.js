@@ -139,7 +139,7 @@ const create = async (req, res) => {
 /**
  *  Update handler for 'seating' reservation to table
  */
-const update = async (req, res, next) => {
+const seat = async (req, res, next) => {
   const { table_id } = res.locals.table;
   const updatedTable = {
     ...req.body.data,
@@ -161,13 +161,13 @@ const finish = async (req, res, next) => {
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [hasData, hasTableName, hasCapacity, asyncErrorBoundary(create)],
-  update: [
+  seat: [
     hasData,
     hasReservationId,
     asyncErrorBoundary(reservationExists),
     asyncErrorBoundary(tableIsUnoccupied),
     tableHasValidCapacity,
-    asyncErrorBoundary(update),
+    asyncErrorBoundary(seat),
   ],
   finish: [
     asyncErrorBoundary(tableExists),

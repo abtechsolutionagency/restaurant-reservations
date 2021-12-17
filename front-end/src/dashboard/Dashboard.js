@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listReservations, listTables } from "../utils/api";
+import { finishTable, listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationList from "./ReservationList";
 import useQuery from "../utils/useQuery";
@@ -58,15 +58,14 @@ function Dashboard({ date }) {
     history.push(`/dashboard?date=${nextDay}`);
   };
 
-  const finishButtonHandler = async id => {
+  const finishButtonClickHandler = async id => {
     const confirm = window.confirm(
-      "Is this table ready to seat new guests?\n\nThis cannot be undone."
+      "Is this table ready to seat new guests? This cannot be undone."
     );
     if (confirm) {
-      // await finishTable(id);
-      const tables = await listTables();
-      setTables(tables);
+      await finishTable(id);
     }
+    loadTables();
   };
 
   return (
@@ -123,7 +122,10 @@ function Dashboard({ date }) {
         reservations={reservations}
       />
       <ErrorAlert error={tablesError} />
-      <TablesList tables={tables} finishButtonHandler={finishButtonHandler} />
+      <TablesList
+        tables={tables}
+        finishButtonClickHandler={finishButtonClickHandler}
+      />
     </main>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
-import { getReservation, listTables, updateTable } from "../utils/api";
+import { getReservation, listTables, seatReservation } from "../utils/api";
 
 const SeatReservation = () => {
   const { reservation_id } = useParams();
@@ -40,7 +40,7 @@ const SeatReservation = () => {
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      await updateTable(selectedTable, reservation_id);
+      await seatReservation(reservation_id, selectedTable);
       history.push("/");
     } catch (error) {
       setSelectedTableError(error);

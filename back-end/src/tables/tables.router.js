@@ -16,7 +16,7 @@ router
 
 router
   .route("/:table_id/seat")
-  .put(controller.update)
+  .put(controller.seat)
   .delete(controller.finish)
   .all(methodNotAllowed);
 

@@ -1,7 +1,7 @@
 import React from "react";
 import TablesListItem from "./TablesListItem";
 
-const TablesList = ({ tables, finishButtonHandler }) => {
+const TablesList = ({ tables, finishButtonClickHandler }) => {
   return (
     <div>
       <div className="d-md-flex mb-3">
@@ -13,7 +13,7 @@ const TablesList = ({ tables, finishButtonHandler }) => {
             {
               <TablesListItem
                 table={table}
-                finishButtonHandler={finishButtonHandler}
+                finishButtonClickHandler={finishButtonClickHandler}
               />
             }
           </div>
