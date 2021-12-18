@@ -21,32 +21,32 @@ const ReservationListItem = ({
   };
 
   return (
-    <div className="card p-3 mb-3">
-      <div>
+    <div className="card d-flex flex-row py-3 mb-3">
+      <div className="mx-3">
         <p>
           <strong>Name: </strong>
           {firstName} {lastName}
         </p>
       </div>
-      <div>
+      <div className="mx-3">
         <p>
           <strong>Number: </strong>
           {mobile_number}
         </p>
       </div>
-      <div>
+      <div className="mx-3">
         <p>
           <strong>Time: </strong>
           {formatTime(reservation_time)}
         </p>
       </div>
-      <div>
+      <div className="mx-3">
         <p>
           <strong>People in Party: </strong>
           {people}
         </p>
       </div>
-      <div>
+      <div className="mx-3">
         <Link to={`/reservations/${reservation_id}/seat`}>
           <button>Seat</button>
         </Link>

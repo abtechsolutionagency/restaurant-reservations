@@ -124,9 +124,7 @@ describe("US-05 - Finish an occupied table - E2E", () => {
         await dialog.dismiss();
       });
 
-      await page.evaluate(selector => {
-        return document.querySelector(selector).click();
-      }, finishButtonSelector);
+      await page.click(finishButtonSelector);
 
       await page.waitForTimeout(1000);
 
