@@ -79,7 +79,7 @@ describe("US-05 - Finish an occupied table - E2E", () => {
         );
         await dialog.accept();
       });
-      console.log(finishButtonSelector);
+
       await page.click(finishButtonSelector);
 
       await page.waitForResponse(response => {
@@ -123,8 +123,10 @@ describe("US-05 - Finish an occupied table - E2E", () => {
         );
         await dialog.dismiss();
       });
-      console.log(finishButtonSelector);
-      await page.click(finishButtonSelector);
+
+      await page.evaluate(selector => {
+        return document.querySelector(selector).click();
+      }, finishButtonSelector);
 
       await page.waitForTimeout(1000);
 

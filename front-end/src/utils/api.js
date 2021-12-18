@@ -140,12 +140,13 @@ export const createTable = async (table, signal) => {
  * @returns {Promise<table>}
  * a promise that resolves the updated table, which will now have an `reservation_id` property.
  */
-export const seatReservation = async (reservation_id, table_id) => {
+export const seatReservation = async (reservation_id, table_id, signal) => {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {
     method: "PUT",
     body: JSON.stringify({ data: { reservation_id } }),
     headers,
+    signal,
   };
   return await fetchJson(url, options, {});
 };
