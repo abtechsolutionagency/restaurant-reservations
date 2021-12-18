@@ -2,14 +2,14 @@ import React from "react";
 import ReservationListItem from "./ReservationListItem";
 
 const ReservationList = ({ date, reservations, filtered }) => {
+  filtered && filterList();
+
   function filterList() {
     return (reservations = reservations.filter(
       reservation =>
         reservation.status === "booked" || reservation.status === "seated"
     ));
   }
-
-  filtered && filterList();
 
   const reservationHeader = () => {
     if (!reservations.length) {
@@ -26,33 +26,13 @@ const ReservationList = ({ date, reservations, filtered }) => {
       <div className="d-md-flex mb-3">
         <h2>{reservationHeader()}</h2>
       </div>
-      {reservations.map(
-        ({
-          reservation_id,
-          first_name,
-          last_name,
-          mobile_number,
-          reservation_date,
-          reservation_time,
-          people,
-          status,
-        }) => {
-          return (
-            <div key={reservation_id}>
-              <ReservationListItem
-                reservation_id={reservation_id}
-                firstName={first_name}
-                lastName={last_name}
-                mobile_number={mobile_number}
-                reservation_date={reservation_date}
-                reservation_time={reservation_time}
-                people={people}
-                status={status}
-              />
-            </div>
-          );
-        }
-      )}
+      {reservations.map(reservation => {
+        return (
+          <div key={reservation.reservation_id}>
+            <ReservationListItem reservation={reservation} />
+          </div>
+        );
+      })}
     </div>
   );
 };

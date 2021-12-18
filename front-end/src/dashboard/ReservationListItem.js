@@ -1,18 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ReservationListItem = ({
-  reservation_id,
-  firstName,
-  lastName,
-  mobile_number,
-  reservation_date,
-  reservation_time,
-  people,
-  status,
-}) => {
+const ReservationListItem = ({ reservation }) => {
   const formatTime = () => {
-    const time = new Date(`${reservation_date} ${reservation_time}`);
+    const time = new Date(
+      `${reservation.reservation_date} ${reservation.reservation_time}`
+    );
     const options = {
       hour: "numeric",
       minute: "numeric",
@@ -26,35 +19,35 @@ const ReservationListItem = ({
       <div className="mx-3">
         <p>
           <strong>Name: </strong>
-          {firstName} {lastName}
+          {reservation.firstName} {reservation.lastName}
         </p>
       </div>
       <div className="mx-3">
         <p>
           <strong>Number: </strong>
-          {mobile_number}
+          {reservation.mobile_number}
         </p>
       </div>
       <div className="mx-3">
         <p>
           <strong>Time: </strong>
-          {formatTime(reservation_time)}
+          {formatTime(reservation.reservation_time)}
         </p>
       </div>
       <div className="mx-3">
         <p>
           <strong>People in Party: </strong>
-          {people}
+          {reservation.people}
         </p>
       </div>
       <div className="mx-3">
-        <p>
+        <p data-reservation-id-status={reservation.reservation_id}>
           <strong>Status: </strong>
-          {status}
+          {reservation.status}
         </p>
       </div>
       <div className="mx-3">
-        <Link to={`/reservations/${reservation_id}/seat`}>
+        <Link to={`/reservations/${reservation.reservation_id}/seat`}>
           <button>Seat</button>
         </Link>
       </div>

@@ -151,6 +151,21 @@ export const seatReservation = async (reservation_id, table_id, signal) => {
   return await fetchJson(url, options, {});
 };
 
+export const updateReservationStatus = async (
+  reservation_id,
+  status,
+  signal
+) => {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}/status`;
+  const options = {
+    method: "PUT",
+    body: JSON.stringify({ data: { status } }),
+    headers,
+    signal,
+  };
+  return await fetchJson(url, options, {});
+};
+
 export const finishTable = async (table_id, signal) => {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {

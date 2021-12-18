@@ -16,4 +16,6 @@ router
 
 router.route("/:reservation_id").get(controller.read).all(methodNotAllowed);
 
+router.route("/:reservation_id/status").all(methodNotAllowed);
+
 module.exports = router;

@@ -158,6 +158,17 @@ const hasPeople = (req, res, next) => {
   });
 };
 
+const hasBookedReservationStatus = (req, res, next) => {
+  const { data: { status } = {} } = req.body;
+  if (status === "booked") {
+    return next();
+  }
+  next({
+    status: 400,
+    message: `Cannot create a new Reservation with status ${status}`,
+  });
+};
+
 /**
  * List handler for reservation resources
  */
@@ -206,6 +217,7 @@ module.exports = {
     hasValidSameDayReservation,
     hasValidReservationTime,
     hasPeople,
+    hasBookedReservationStatus,
     asyncErrorBoundary(create),
   ],
   list: asyncErrorBoundary(list),
