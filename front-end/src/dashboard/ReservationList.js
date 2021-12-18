@@ -1,7 +1,16 @@
 import React from "react";
 import ReservationListItem from "./ReservationListItem";
 
-const ReservationList = ({ date, reservations }) => {
+const ReservationList = ({ date, reservations, filtered }) => {
+  function filterList() {
+    return (reservations = reservations.filter(
+      reservation =>
+        reservation.status === "booked" || reservation.status === "seated"
+    ));
+  }
+
+  filtered && filterList();
+
   const reservationHeader = () => {
     if (!reservations.length) {
       return `No Reservations for ${date}`;
@@ -26,6 +35,7 @@ const ReservationList = ({ date, reservations }) => {
           reservation_date,
           reservation_time,
           people,
+          status,
         }) => {
           return (
             <div key={reservation_id}>
@@ -37,6 +47,7 @@ const ReservationList = ({ date, reservations }) => {
                 reservation_date={reservation_date}
                 reservation_time={reservation_time}
                 people={people}
+                status={status}
               />
             </div>
           );

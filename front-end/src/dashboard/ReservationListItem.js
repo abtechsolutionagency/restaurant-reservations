@@ -9,6 +9,7 @@ const ReservationListItem = ({
   reservation_date,
   reservation_time,
   people,
+  status,
 }) => {
   const formatTime = () => {
     const time = new Date(`${reservation_date} ${reservation_time}`);
@@ -44,6 +45,12 @@ const ReservationListItem = ({
         <p>
           <strong>People in Party: </strong>
           {people}
+        </p>
+      </div>
+      <div className="mx-3">
+        <p>
+          <strong>Status: </strong>
+          {status}
         </p>
       </div>
       <div className="mx-3">
