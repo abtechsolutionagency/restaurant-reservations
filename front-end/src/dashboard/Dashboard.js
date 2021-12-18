@@ -64,8 +64,8 @@ function Dashboard({ date }) {
     );
     if (confirm) {
       await finishTable(id);
+      loadTables();
     }
-    loadTables();
   };
 
   return (
