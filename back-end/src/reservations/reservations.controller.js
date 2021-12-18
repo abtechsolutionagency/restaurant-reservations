@@ -40,6 +40,22 @@ const hasData = (req, res, next) => {
 };
 
 /**
+ * Middleware to validate reservation_id
+ */
+const reservationExists = async (req, res, next) => {
+  const { reservation_id } = req.params;
+  const foundReservation = await service.read(reservation_id);
+  if (foundReservation) {
+    res.locals.reservation = foundReservation;
+    return next();
+  }
+  next({
+    status: 404,
+    message: `Reservation ID ${reservation_id} does not exist.`,
+  });
+};
+
+/**
  * Middleware for post body validation
  */
 const hasFirstName = (req, res, next) => {
@@ -170,6 +186,34 @@ const hasBookedReservationStatus = (req, res, next) => {
 };
 
 /**
+ * Middleware for PUT validation
+ */
+
+const hasValidReservationStatus = (req, res, next) => {
+  const validStatus = ["booked", "seated", "finished"];
+  const { data: { status } = {} } = req.body;
+  if (validStatus.includes(status)) {
+    res.locals.status = status;
+    return next();
+  }
+  next({
+    status: 400,
+    message: `Status ${status} is invalid`,
+  });
+};
+
+const reservationStatusIsNotFinished = (req, res, next) => {
+  const { status } = res.locals.reservation;
+  if (status === "finished") {
+    return next({
+      status: 400,
+      message: "This reservation is already finished",
+    });
+  }
+  next();
+};
+
+/**
  * List handler for reservation resources
  */
 const list = async (req, res) => {
@@ -183,26 +227,26 @@ const list = async (req, res) => {
  *
  * Read handler for reservation
  */
-
-const read = async (req, res, next) => {
-  const { reservation_id } = req.params;
-  const data = await service.read(reservation_id);
-  if (data) {
-    return res.json({ data });
-  }
-  next({
-    status: 404,
-    message: `Reservation ID ${reservation_id} does not exist.`,
-  });
+const read = async (req, res) => {
+  const { reservation_id } = res.locals.reservation;
+  res.json({ data: await service.read(reservation_id) });
 };
 
 /**
  *  Create handler for new reservation
  */
-
 const create = async (req, res) => {
   const newReservation = await service.create(req.body.data);
   res.status(201).json({ data: newReservation });
+};
+
+/**
+ *  Update handler for reservation status
+ */
+const updateStatus = async (req, res) => {
+  const { reservation_id } = res.locals.reservation;
+  const status = res.locals.status;
+  res.status(200).json({ data: await service.update(reservation_id, status) });
 };
 
 module.exports = {
@@ -221,5 +265,11 @@ module.exports = {
     asyncErrorBoundary(create),
   ],
   list: asyncErrorBoundary(list),
-  read: asyncErrorBoundary(read),
+  read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
+  update: [
+    asyncErrorBoundary(reservationExists),
+    hasValidReservationStatus,
+    reservationStatusIsNotFinished,
+    asyncErrorBoundary(updateStatus),
+  ],
 };
