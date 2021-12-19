@@ -13,6 +13,7 @@ const CreateReservation = () => {
     reservation_date: "",
     reservation_time: "",
     people: 1,
+    status: "booked",
   });
   const [error, setError] = useState(null);
 

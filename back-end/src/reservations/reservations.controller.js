@@ -175,7 +175,7 @@ const hasPeople = (req, res, next) => {
 
 const hasBookedReservationStatus = (req, res, next) => {
   const { data: { status } = {} } = req.body;
-  if (status === "booked") {
+  if (!status || status === "booked") {
     return next();
   }
   next({
@@ -219,7 +219,10 @@ const list = async (req, res) => {
   const date = req.query.date;
   const reservations = await service.list(date);
   const filtered = reservations.filter(
-    ({ status }) => status === "booked" || status === "seated"
+    reservation =>
+      !reservation.status ||
+      reservation.status === "booked" ||
+      reservation.status === "seated"
   );
   res.json({
     data: filtered,

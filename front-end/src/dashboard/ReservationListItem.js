@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ReservationListItem = ({ reservation }) => {
+  const reservation_id = reservation.reservation_id;
+
   const formatTime = () => {
     const time = new Date(
       `${reservation.reservation_date} ${reservation.reservation_time}`
@@ -19,7 +21,7 @@ const ReservationListItem = ({ reservation }) => {
       <div className="mx-3">
         <p>
           <strong>Name: </strong>
-          {reservation.firstName} {reservation.lastName}
+          {reservation.first_name} {reservation.last_name}
         </p>
       </div>
       <div className="mx-3">
@@ -41,13 +43,13 @@ const ReservationListItem = ({ reservation }) => {
         </p>
       </div>
       <div className="mx-3">
-        <p data-reservation-id-status={reservation.reservation_id}>
+        <p data-reservation-id-status={reservation_id}>
           <strong>Status: </strong>
           {reservation.status}
         </p>
       </div>
       <div className="mx-3">
-        <Link to={`/reservations/${reservation.reservation_id}/seat`}>
+        <Link to={`/reservations/${reservation_id}/seat`}>
           <button>Seat</button>
         </Link>
       </div>
