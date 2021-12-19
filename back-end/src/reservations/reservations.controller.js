@@ -217,8 +217,12 @@ const reservationStatusIsNotFinished = (req, res, next) => {
  */
 const list = async (req, res) => {
   const date = req.query.date;
+  const reservations = await service.list(date);
+  const filtered = reservations.filter(
+    ({ status }) => status === "booked" || status === "seated"
+  );
   res.json({
-    data: await service.list(date),
+    data: filtered,
   });
 };
 
