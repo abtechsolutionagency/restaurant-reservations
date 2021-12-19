@@ -49,9 +49,11 @@ const ReservationListItem = ({ reservation }) => {
         </p>
       </div>
       <div className="mx-3">
-        <Link to={`/reservations/${reservation_id}/seat`}>
-          <button>Seat</button>
-        </Link>
+        {reservation.status === "booked" && (
+          <Link to={`/reservations/${reservation_id}/seat`}>
+            <button>Seat</button>
+          </Link>
+        )}
       </div>
     </div>
   );
