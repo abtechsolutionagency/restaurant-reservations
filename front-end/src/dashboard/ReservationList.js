@@ -1,16 +1,7 @@
 import React from "react";
 import ReservationListItem from "./ReservationListItem";
 
-const ReservationList = ({ date, reservations, filtered }) => {
-  filtered && filterList();
-
-  function filterList() {
-    return (reservations = reservations.filter(
-      reservation =>
-        reservation.status === "booked" || reservation.status === "seated"
-    ));
-  }
-
+const ReservationList = ({ date, reservations }) => {
   const reservationHeader = () => {
     if (!reservations.length) {
       return `No Reservations for ${date}`;

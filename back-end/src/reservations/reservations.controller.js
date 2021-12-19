@@ -108,7 +108,6 @@ const hasReservationDate = (req, res, next) => {
 
 const hasValidReservationDate = (req, res, next) => {
   const resDateString = res.locals.reservation_date.replace(/[-]/g, "");
-  console.log(resDateString);
   const day = new Date(res.locals.reservation_date).getUTCDay();
   if ([2].includes(day)) {
     next({

@@ -120,7 +120,6 @@ function Dashboard({ date }) {
           day: "numeric",
         })}
         reservations={reservations}
-        filtered={true}
       />
       <ErrorAlert error={tablesError} />
       <TablesList
