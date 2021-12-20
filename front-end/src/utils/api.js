@@ -140,17 +140,27 @@ export const createTable = async (table, signal) => {
  * @returns {Promise<table>}
  * a promise that resolves the updated table, which will now have an `reservation_id` property.
  */
-export const seatReservation = async (reservation_id, table_id, signal) => {
+export const seatReservation = async (reservation_id, table_id) => {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {
     method: "PUT",
     body: JSON.stringify({ data: { reservation_id } }),
     headers,
-    signal,
   };
   return await fetchJson(url, options, {});
 };
 
+/**
+ *
+ * @param reservation_id
+ * The reservation id to update
+ * @param status
+ * The updated status
+ *@param  signal
+ * optional AbortController.signal
+ * @returns {Promise<reservation>}
+ * a promise that resolves the updated reservation, which will now have a new status.
+ */
 export const updateReservationStatus = async (
   reservation_id,
   status,
@@ -166,11 +176,22 @@ export const updateReservationStatus = async (
   return await fetchJson(url, options, {});
 };
 
-export const finishTable = async (table_id, signal) => {
+/**
+ *
+ * @param table_id
+ * The table id to finish
+ * @returns {Promise<Error|*>}
+ *  a promise that resolves to an empty object.
+ */
+export const finishTable = async table_id => {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {
     method: "DELETE",
-    signal,
   };
-  return await fetchJson(url, options, {});
+  return await fetchJson(url, options);
+};
+
+export const searchReservations = async (mobile_number, signal) => {
+  const url = `${API_BASE_URL}/reservations?mobile_number=${mobile_number}`;
+  return await fetchJson(url, { headers, signal }, []);
 };

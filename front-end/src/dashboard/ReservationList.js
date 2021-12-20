@@ -1,7 +1,7 @@
 import React from "react";
 import ReservationListItem from "./ReservationListItem";
 
-const ReservationList = ({ date, reservations }) => {
+const ReservationList = ({ date = "", reservations, search = false }) => {
   const reservationHeader = () => {
     if (!reservations.length) {
       return `No Reservations for ${date}`;
@@ -15,8 +15,9 @@ const ReservationList = ({ date, reservations }) => {
   return (
     <div>
       <div className="d-md-flex mb-3">
-        <h2>{reservationHeader()}</h2>
+        <h2>{!search && reservationHeader()}</h2>
       </div>
+      <h3>{search && !reservations.length && "No reservations found"}</h3>
       {reservations.map(reservation => {
         return (
           <div key={reservation.reservation_id}>
