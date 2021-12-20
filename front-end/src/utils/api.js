@@ -178,6 +178,23 @@ export const updateReservationStatus = async (
 
 /**
  *
+ * @param reservation_id
+ * The reservation id to cancel
+ * @returns {Promise<reservation>}
+ * a promise that resolves the updated reservation, which will now have a cancelled status.
+ */
+export const cancelReservation = async reservation_id => {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}/status`;
+  const options = {
+    method: "PUT",
+    body: JSON.stringify({ data: { status: "cancelled" } }),
+    headers,
+  };
+  return await fetchJson(url, options, {});
+};
+
+/**
+ *
  * @param table_id
  * The table id to finish
  * @returns {Promise<Error|*>}
@@ -194,4 +211,19 @@ export const finishTable = async table_id => {
 export const searchReservations = async (mobile_number, signal) => {
   const url = `${API_BASE_URL}/reservations?mobile_number=${mobile_number}`;
   return await fetchJson(url, { headers, signal }, []);
+};
+
+export const updateReservation = async (
+  reservation_id,
+  updatedReservation,
+  signal
+) => {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}`;
+  const options = {
+    method: "PUT",
+    body: JSON.stringify({ data: updatedReservation }),
+    headers,
+    signal,
+  };
+  return await fetchJson(url, options, {});
 };

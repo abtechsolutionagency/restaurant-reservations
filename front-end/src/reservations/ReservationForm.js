@@ -16,9 +16,8 @@ const ReservationForm = ({
   const history = useHistory();
 
   return (
-    <div className="container">
+    <div>
       <ErrorAlert error={error} />
-      <h1>Create a New Reservation</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-floating mb-3">
           <input

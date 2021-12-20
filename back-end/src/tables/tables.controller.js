@@ -157,8 +157,7 @@ const seat = async (req, res) => {
     ...req.body.data,
     table_id,
   };
-  await service.update(updatedTable);
-  await service.updateReservationStatus(reservation_id, "seated");
+  await service.update(updatedTable, reservation_id);
   res.status(200).json({ data: updatedTable });
 };
 
@@ -167,8 +166,7 @@ const seat = async (req, res) => {
  */
 const finish = async (req, res) => {
   const { reservation_id, table_id } = res.locals.table;
-  const emptyTable = await service.finish(table_id);
-  await service.updateReservationStatus(reservation_id, "finished");
+  const emptyTable = await service.finish(table_id, reservation_id);
   res.status(200).json({ data: emptyTable });
 };
 

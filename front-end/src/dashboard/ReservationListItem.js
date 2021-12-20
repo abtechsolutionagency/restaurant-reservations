@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ReservationListItem = ({ reservation }) => {
+const ReservationListItem = ({ reservation, cancelButtonClickHandler }) => {
   const reservation_id = reservation.reservation_id;
 
   const formatTime = () => {
@@ -49,7 +49,14 @@ const ReservationListItem = ({ reservation }) => {
         </p>
       </div>
       <div className="mx-3">
-        {reservation.status === "booked" && <button>Cancel</button>}
+        {reservation.status === "booked" && (
+          <button
+            data-reservation-id-cancel={reservation.reservation_id}
+            onClick={() => cancelButtonClickHandler(reservation_id)}
+          >
+            Cancel
+          </button>
+        )}
       </div>
       <div className="mx-3">
         {reservation.status === "booked" && (
