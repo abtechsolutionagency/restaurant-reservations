@@ -63,7 +63,11 @@ function Dashboard({ date }) {
       "Is this table ready to seat new guests? This cannot be undone."
     );
     if (confirm) {
-      await finishTable(id);
+      try {
+        await finishTable(id);
+      } catch (error) {
+        setTablesError(error);
+      }
       loadTables();
       loadDashboard();
     }

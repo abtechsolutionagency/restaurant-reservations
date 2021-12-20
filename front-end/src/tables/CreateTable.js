@@ -22,12 +22,14 @@ const CreateTable = () => {
 
   const handleSubmit = async event => {
     event.preventDefault();
+    const abortController = new AbortController();
     try {
-      await createTable(table);
+      await createTable(table, abortController.signal);
       history.push("/dashboard");
     } catch (error) {
       setError(error);
     }
+    return () => abortController.abort();
   };
 
   return (
