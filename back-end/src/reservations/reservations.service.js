@@ -18,7 +18,15 @@ const read = reservation_id => {
   return knex("reservations").select("*").where({ reservation_id }).first();
 };
 
-const update = (reservation_id, status) => {
+const update = (reservation_id, updatedReservation) => {
+  return knex("reservations")
+    .select("*")
+    .where({ reservation_id })
+    .update(updatedReservation, "*")
+    .then(reservationData => reservationData[0]);
+};
+
+const updateStatus = (reservation_id, status) => {
   return knex("reservations")
     .select("*")
     .where({ reservation_id })
@@ -40,5 +48,6 @@ module.exports = {
   list,
   read,
   update,
+  updateStatus,
   search,
 };

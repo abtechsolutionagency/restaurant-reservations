@@ -189,7 +189,7 @@ const hasBookedReservationStatus = (req, res, next) => {
  */
 
 const hasValidReservationStatus = (req, res, next) => {
-  const validStatus = ["booked", "seated", "finished"];
+  const validStatus = ["booked", "seated", "finished", "cancelled"];
   const { data: { status } = {} } = req.body;
   if (validStatus.includes(status)) {
     res.locals.status = status;
@@ -258,7 +258,23 @@ const create = async (req, res) => {
 const updateStatus = async (req, res) => {
   const { reservation_id } = res.locals.reservation;
   const status = res.locals.status;
-  res.status(200).json({ data: await service.update(reservation_id, status) });
+  res
+    .status(200)
+    .json({ data: await service.updateStatus(reservation_id, status) });
+};
+
+/**
+ *  Update handler for reservation info
+ */
+const updateReservation = async (req, res) => {
+  const { reservation_id } = res.locals.reservation;
+  const updatedReservation = {
+    ...req.body.data,
+    reservation_id,
+  };
+  res
+    .status(200)
+    .json({ data: await service.update(reservation_id, updatedReservation) });
 };
 
 module.exports = {
@@ -279,6 +295,20 @@ module.exports = {
   list: asyncErrorBoundary(list),
   read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
   update: [
+    hasData,
+    hasFirstName,
+    hasLastName,
+    hasMobileNumber,
+    hasReservationDate,
+    hasValidReservationDate,
+    hasReservationTime,
+    hasValidSameDayReservation,
+    hasValidReservationTime,
+    hasPeople,
+    asyncErrorBoundary(reservationExists),
+    asyncErrorBoundary(updateReservation),
+  ],
+  updateStatus: [
     asyncErrorBoundary(reservationExists),
     hasValidReservationStatus,
     reservationStatusIsNotFinished,
