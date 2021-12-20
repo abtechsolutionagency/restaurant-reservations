@@ -216,17 +216,23 @@ const reservationStatusIsNotFinished = (req, res, next) => {
  * List handler for reservation resources
  */
 const list = async (req, res) => {
-  const date = req.query.date;
-  const reservations = await service.list(date);
-  const filtered = reservations.filter(
-    reservation =>
-      !reservation.status ||
-      reservation.status === "booked" ||
-      reservation.status === "seated"
-  );
-  res.json({
-    data: filtered,
-  });
+  if (req.query.date) {
+    const { date } = req.query;
+    const reservations = await service.list(date);
+    const filtered = reservations.filter(
+      reservation =>
+        !reservation.status ||
+        reservation.status === "booked" ||
+        reservation.status === "seated"
+    );
+    res.json({
+      data: filtered,
+    });
+  }
+  if (req.query.mobile_number) {
+    const { mobile_number } = req.query;
+    res.json({ data: await service.search(mobile_number) });
+  }
 };
 
 /**
