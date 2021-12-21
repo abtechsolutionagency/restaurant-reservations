@@ -11,6 +11,7 @@ import useQuery from "../utils/useQuery";
 import { useHistory } from "react-router-dom";
 import { next, previous } from "../utils/date-time";
 import TablesList from "./TablesList";
+import TimeDisplay from "./TimeDisplay";
 
 /**
  * Defines the dashboard page.
@@ -94,55 +95,58 @@ function Dashboard({ date }) {
 
   return (
     <main>
-      <h1 className="mb-4">Dashboard</h1>
-      <div>
-        <div>
+      <header className="d-flex flex-row justify-content-between align-items-center flex-wrap py-4">
+        <div className="pe-5 mb-2 ">
+          <h1 className="me-5">Dashboard</h1>
+        </div>
+
+        <div className="d-flex flex-column">
           <h3>
             Today is{" "}
             {new Date().toLocaleDateString("us-EN", {
-              weekday: "long",
+              weekday: "short",
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
           </h3>
+          <div className="text-sm-end m-0">
+            <TimeDisplay />
+          </div>
         </div>
-        <div
-          className="btn-group my-3"
-          role="group"
-          aria-label="Basic outlined example"
+      </header>
+      <div
+        className="btn-group my-3"
+        role="group"
+        aria-label="Basic outlined example"
+      >
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={() => previousDayButtonHandler()}
         >
-          <button
-            type="button"
-            className="btn btn-outline-primary"
-            onClick={() => previousDayButtonHandler()}
-          >
-            Prev Day
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline-primary"
-            onClick={() => todayButtonHandler()}
-          >
-            Today
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline-primary"
-            onClick={() => nextDayButtonHandler()}
-          >
-            Next Day
-          </button>
-        </div>
+          Prev Day
+        </button>
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={() => todayButtonHandler()}
+        >
+          Today
+        </button>
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={() => nextDayButtonHandler()}
+        >
+          Next Day
+        </button>
       </div>
+
       <div className="d-md-flex mb-3"></div>
       <ErrorAlert error={reservationsError} />
       <ReservationList
-        date={new Date(date.replace(/-/g, "/")).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        })}
+        date={new Date(date.replace(/-/g, "/")).toLocaleDateString("en-US")}
         reservations={reservations}
         cancelButtonClickHandler={cancelButtonClickHandler}
       />

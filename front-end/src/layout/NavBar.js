@@ -7,7 +7,7 @@ import "./Navbar.css";
 const NavBar = () => {
   const history = useHistory();
   return (
-    <nav className="navbar py-3">
+    <nav className="navbar py-2">
       <div className="container-lg d-flex justify-content-between align-items-center">
         <Link className="navbar-brand" to="/">
           <img src={logo} alt="Seatable Logo" />

@@ -147,7 +147,7 @@ const hasValidReservationTime = (req, res, next) => {
   }
   next({
     status: 400,
-    message: "Reservations must be between 10:30 AM and 9:30 PM",
+    message: "Reservations must be between 10:30 AM and 9:30 PM PST",
   });
 };
 
