@@ -12,9 +12,9 @@ import NavBar from "./NavBar";
  */
 function Layout() {
   return (
-    <div className="container-fluid p-0">
+    <div>
       <NavBar />
-      <div className="container-lg">
+      <div>
         <Routes />
       </div>
     </div>

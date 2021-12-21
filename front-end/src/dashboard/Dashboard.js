@@ -94,8 +94,8 @@ function Dashboard({ date }) {
   };
 
   return (
-    <main>
-      <header className="d-flex flex-row justify-content-between align-items-center flex-wrap py-4">
+    <main className="container-lg">
+      <header className="d-flex flex-row justify-content-between align-items-center flex-wrap py-4 m-0">
         <div className="pe-5 mb-2 ">
           <h1 className="me-5">Dashboard</h1>
         </div>
@@ -115,40 +115,15 @@ function Dashboard({ date }) {
           </div>
         </div>
       </header>
-      <div
-        className="btn-group my-3"
-        role="group"
-        aria-label="Basic outlined example"
-      >
-        <button
-          type="button"
-          className="btn btn-outline-primary"
-          onClick={() => previousDayButtonHandler()}
-        >
-          Prev Day
-        </button>
-        <button
-          type="button"
-          className="btn btn-outline-primary"
-          onClick={() => todayButtonHandler()}
-        >
-          Today
-        </button>
-        <button
-          type="button"
-          className="btn btn-outline-primary"
-          onClick={() => nextDayButtonHandler()}
-        >
-          Next Day
-        </button>
-      </div>
 
-      <div className="d-md-flex mb-3"></div>
       <ErrorAlert error={reservationsError} />
       <ReservationList
         date={new Date(date.replace(/-/g, "/")).toLocaleDateString("en-US")}
         reservations={reservations}
         cancelButtonClickHandler={cancelButtonClickHandler}
+        previousDayButtonHandler={previousDayButtonHandler}
+        todayButtonHandler={todayButtonHandler}
+        nextDayButtonHandler={nextDayButtonHandler}
       />
       <ErrorAlert error={tablesError} />
       <TablesList

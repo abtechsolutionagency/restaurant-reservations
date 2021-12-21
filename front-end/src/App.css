@@ -1,17 +1,15 @@
 root {
   --dark-text: #1f2329;
   --light-text: #49505a;
-  --header-blue: #002966;
-  --primary-blue: #2f73da;
   --red: #ae0a0a;
   --blue-bg: #eaf1fb;
   --light-gray: #f8f9fb;
   --light-gray-outline: #eef1f6;
-  --bg: #fbfcfd;
 }
 
 body {
   font-family: "Montserrat", sans-serif;
+  background-color: #fbfcfd;
 }
 
 h1 {
@@ -47,15 +45,10 @@ p {
 .btn {
   font-size: 1rem;
   line-height: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
   padding: 10px 16px;
 }
-button.btn.btn-light {
-  border: 2px solid #fff;
-  color: var(--header-blue);
-}
 
-button.btn.btn-light:hover {
-  background-color: transparent;
-  color: #ffffff;
+button.btn.btn-primary {
+  background-color: #2f73da;
 }

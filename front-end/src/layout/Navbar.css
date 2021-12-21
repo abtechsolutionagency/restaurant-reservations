@@ -5,3 +5,14 @@
 .navbar-brand img {
   height: 48px;
 }
+
+button.btn.btn-light {
+  background-color: #fff;
+  border: 2px solid #fff;
+  color: var(--header-blue);
+}
+
+button.btn.btn-light:hover {
+  background-color: transparent;
+  color: #ffffff;
+}
