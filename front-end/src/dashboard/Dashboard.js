@@ -97,7 +97,7 @@ function Dashboard({ date }) {
       <h1 className="mb-4">Dashboard</h1>
       <div>
         <div>
-          <h4>
+          <h3>
             Today is{" "}
             {new Date().toLocaleDateString("us-EN", {
               weekday: "long",
@@ -105,7 +105,7 @@ function Dashboard({ date }) {
               month: "long",
               day: "numeric",
             })}
-          </h4>
+          </h3>
         </div>
         <div
           className="btn-group my-3"

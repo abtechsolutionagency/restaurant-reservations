@@ -1,0 +1,17 @@
+.navbar {
+  background-color: #002966;
+}
+
+.brand-text {
+  font-size: 1.5rem;
+
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.08rem;
+  position: relative;
+  top: 4px;
+}
+
+.brand-icon {
+  margin: 0 0.5em 0 0;
+}
