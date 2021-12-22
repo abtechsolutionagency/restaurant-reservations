@@ -49,7 +49,7 @@ describe("US-05 - Finish an occupied table - E2E", () => {
 
       page = await browser.newPage();
       page.on("console", onPageConsole);
-      await page.setViewport({ width: 1920, height: 1600 });
+      await page.setViewport({ width: 1920, height: 1080 });
       await page.goto(`${baseURL}/dashboard?date=2035-01-01`, {
         waitUntil: "networkidle0",
       });

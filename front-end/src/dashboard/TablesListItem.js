@@ -3,8 +3,8 @@ import React from "react";
 const TablesListItem = ({ table, finishButtonHandler }) => {
   const tableFilled = () => {
     return table.reservation_id
-      ? "card table-card table-filled d-flex flex-column p-3"
-      : "card table-card d-flex flex-column p-3";
+      ? "card table-card table-filled align-self-stretch flex-fill d-flex flex-column p-3 "
+      : "card table-card align-self-stretch flex-fill d-flex flex-column p-3 ";
   };
 
   return (
@@ -17,12 +17,9 @@ const TablesListItem = ({ table, finishButtonHandler }) => {
             {table.capacity}
           </p>
         </div>
-
-        <div className="mx-3">
-          <p data-table-id-status={table.table_id}>
-            {table.reservation_id ? "OCCUPIED" : "FREE"}
-          </p>
-        </div>
+        <p data-table-id-status={table.table_id}>
+          {table.reservation_id ? "OCCUPIED" : "FREE"}
+        </p>
       </div>
 
       <button

@@ -6,7 +6,7 @@ const TablesList = ({ tables, finishButtonHandler }) => {
   const history = useHistory();
   return (
     <div className="my-3 p-3">
-      <div className="row d-flex flex-column flex-sm-row flex-wrap mb-3">
+      <div className="row d-flex flex-column flex-sm-row flex-wrap p-2">
         <div className="col col-sm-7 d-md-flex flex-column align-items-start mb-2">
           <h2>{tables.length} tables</h2>
         </div>
@@ -21,10 +21,13 @@ const TablesList = ({ tables, finishButtonHandler }) => {
           </button>
         </div>
       </div>
-      <div className="row">
+      <div className="d-flex flex-row flex-wrap">
         {tables.map(table => {
           return (
-            <div key={table.table_id} className="col-3">
+            <div
+              key={table.table_id}
+              className="d-flex col-12 col-sm-6 col-xl-3 p-1"
+            >
               <TablesListItem
                 table={table}
                 finishButtonHandler={finishButtonHandler}
