@@ -12,7 +12,7 @@ const hasData = (req, res, next) => {
 };
 
 /**
- * Middleware for post body validation
+ * Middleware for POST body validation
  */
 const hasTableName = (req, res, next) => {
   const { data: { table_name } = {} } = req.body;
@@ -104,7 +104,7 @@ const tableHasValidCapacity = (req, res, next) => {
 };
 
 /**
- * Validation Middleware for finish table requests
+ * Validation Middleware for 'finish' table requests
  */
 const tableExists = async (req, res, next) => {
   const { table_id } = req.params;
@@ -162,7 +162,7 @@ const seat = async (req, res) => {
 };
 
 /**
- *  Finish handler for removing reservation from table
+ *  'Finish' handler for removing reservation from table
  */
 const finish = async (req, res) => {
   const { reservation_id, table_id } = res.locals.table;

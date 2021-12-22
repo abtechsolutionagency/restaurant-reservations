@@ -1,18 +1,25 @@
 import React from "react";
 import ReservationListItem from "./ReservationListItem";
-import "./ReservationList.css";
 import { useHistory } from "react-router-dom";
+import useQuery from "../utils/useQuery";
+import { today } from "../utils/date-time";
 
 const ReservationList = ({
   date = "",
   reservations,
   search = false,
-  cancelButtonClickHandler,
+  cancelButtonHandler,
   previousDayButtonHandler,
   todayButtonHandler,
   nextDayButtonHandler,
 }) => {
   const history = useHistory();
+  const query = useQuery();
+
+  if (!query.get("date") || query.get("date") === today()) {
+    date = "Today";
+  }
+
   const reservationHeader = () => {
     if (!reservations.length) {
       return `No Reservations for ${date}`;
@@ -25,7 +32,7 @@ const ReservationList = ({
 
   const showSelectDateButtons = () => {
     return (
-      <div className="d-flex flex-row">
+      <div className="date-buttons d-flex flex-row">
         <button
           type="button"
           className="btn btn-outline-primary me-1 flex-sm-grow-0 flex-grow-1"
@@ -52,7 +59,7 @@ const ReservationList = ({
   };
 
   return (
-    <div className="reservation-container p-3">
+    <div className="reservation-container p-3 p-md-4">
       <div className="row d-flex flex-column flex-sm-row flex-wrap mb-3">
         <div className="col col-sm-7 d-md-flex flex-column align-items-start mb-2">
           <h2>{!search && reservationHeader()}</h2>
@@ -76,7 +83,7 @@ const ReservationList = ({
             <div key={reservation.reservation_id}>
               <ReservationListItem
                 reservation={reservation}
-                cancelButtonClickHandler={cancelButtonClickHandler}
+                cancelButtonHandler={cancelButtonHandler}
               />
             </div>
           );

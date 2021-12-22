@@ -64,7 +64,7 @@ function Dashboard({ date }) {
     history.push(`/dashboard?date=${nextDay}`);
   };
 
-  const finishButtonClickHandler = async id => {
+  const finishButtonHandler = async id => {
     const confirm = window.confirm(
       "Is this table ready to seat new guests? This cannot be undone."
     );
@@ -79,7 +79,7 @@ function Dashboard({ date }) {
     }
   };
 
-  const cancelButtonClickHandler = async id => {
+  const cancelButtonHandler = async id => {
     const confirm = window.confirm(
       "Do you want to cancel this reservation? This cannot be undone."
     );
@@ -95,16 +95,12 @@ function Dashboard({ date }) {
 
   return (
     <main className="container-lg">
-      <header className="d-flex flex-row justify-content-between align-items-center flex-wrap py-4 m-0">
-        <div className="pe-5 mb-2 ">
-          <h1 className="me-5">Dashboard</h1>
-        </div>
-
+      <header className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center flex-wrap px-2 px-md-0 py-4 m-0">
+        <h1 className="mb-2">Dashboard</h1>
         <div className="d-flex flex-column">
           <h3>
-            Today is{" "}
             {new Date().toLocaleDateString("us-EN", {
-              weekday: "short",
+              weekday: "long",
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -120,16 +116,13 @@ function Dashboard({ date }) {
       <ReservationList
         date={new Date(date.replace(/-/g, "/")).toLocaleDateString("en-US")}
         reservations={reservations}
-        cancelButtonClickHandler={cancelButtonClickHandler}
+        cancelButtonHandler={cancelButtonHandler}
         previousDayButtonHandler={previousDayButtonHandler}
         todayButtonHandler={todayButtonHandler}
         nextDayButtonHandler={nextDayButtonHandler}
       />
       <ErrorAlert error={tablesError} />
-      <TablesList
-        tables={tables}
-        finishButtonClickHandler={finishButtonClickHandler}
-      />
+      <TablesList tables={tables} finishButtonHandler={finishButtonHandler} />
     </main>
   );
 }

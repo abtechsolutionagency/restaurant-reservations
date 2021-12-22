@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./ReservationListItem.css";
 
-const ReservationListItem = ({ reservation, cancelButtonClickHandler }) => {
+const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
   const reservation_id = reservation.reservation_id;
 
   const formatTime = () => {
@@ -53,15 +53,15 @@ const ReservationListItem = ({ reservation, cancelButtonClickHandler }) => {
           <button
             type="button"
             name="cancel"
-            className="btn btn-text cancel col-4 col-sm-3 col-md-4 text-nowrap pe-2 pe-md-1"
+            className="btn btn-text cancel col-4 col-sm-3 col-md-4 text-nowrap pe-1"
             data-reservation-id-cancel={reservation.reservation_id}
-            onClick={() => cancelButtonClickHandler(reservation_id)}
+            onClick={() => cancelButtonHandler(reservation_id)}
           >
             Cancel
           </button>
           <Link
             to={`/reservations/${reservation_id}/edit`}
-            className="d-flex col-4 col-sm-4  px-2 px-md-1"
+            className="d-flex col-4  px-1"
           >
             <button
               type="button"
@@ -73,7 +73,7 @@ const ReservationListItem = ({ reservation, cancelButtonClickHandler }) => {
           </Link>
           <Link
             to={`/reservations/${reservation_id}/seat`}
-            className="d-flex col-4 col-sm-5 col-md-4 ps-2 ps-md-1"
+            className="d-flex col-4 col-sm-5 col-md-4 ps-1"
           >
             <button
               type="button"

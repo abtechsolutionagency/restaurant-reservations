@@ -56,7 +56,7 @@ const reservationExists = async (req, res, next) => {
 };
 
 /**
- * Middleware for post body validation
+ * Middleware for POST body validation
  */
 const hasFirstName = (req, res, next) => {
   const { data: { first_name } = {} } = req.body;
@@ -245,7 +245,7 @@ const read = async (req, res) => {
 };
 
 /**
- *  Create handler for new reservation
+ * Create handler for new reservation
  */
 const create = async (req, res) => {
   const newReservation = await service.create(req.body.data);
@@ -253,7 +253,7 @@ const create = async (req, res) => {
 };
 
 /**
- *  Update handler for reservation status
+ * Update handler for reservation status
  */
 const updateStatus = async (req, res) => {
   const { reservation_id } = res.locals.reservation;
@@ -264,7 +264,7 @@ const updateStatus = async (req, res) => {
 };
 
 /**
- *  Update handler for reservation info
+ * Update handler for reservation info
  */
 const updateReservation = async (req, res) => {
   const { reservation_id } = res.locals.reservation;
