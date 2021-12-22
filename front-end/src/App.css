@@ -1,7 +1,6 @@
 root {
   --dark-text: #1f2329;
   --light-text: #49505a;
-  --red: #ae0a0a;
   --blue-bg: #eaf1fb;
   --light-gray: #f8f9fb;
   --light-gray-outline: #eef1f6;
@@ -40,6 +39,7 @@ p {
   line-height: 1.5;
   font-weight: 400;
   color: var(--dark-text);
+  margin: 0;
 }
 
 .btn {
@@ -50,5 +50,19 @@ p {
 }
 
 button.btn.btn-primary {
+  background-color: #2f73da;
+  border: 1px solid #2f73da;
+}
+
+button.btn.btn-primary:hover {
+  background-color: #034ab3;
+  border: 1px solid #034ab3;
+}
+
+button.btn.btn-outline-primary {
+  border: 1px solid #2f73da;
+}
+
+button.btn.btn-outline-primary:hover {
   background-color: #2f73da;
 }

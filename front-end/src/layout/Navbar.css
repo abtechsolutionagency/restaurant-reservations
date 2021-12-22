@@ -13,6 +13,6 @@ button.btn.btn-light {
 }
 
 button.btn.btn-light:hover {
-  background-color: transparent;
-  color: #ffffff;
+  background-color: #eef1f6;
+  color: #1f2329;
 }
