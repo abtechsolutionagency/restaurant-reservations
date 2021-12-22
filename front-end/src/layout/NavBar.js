@@ -11,6 +11,7 @@ const NavBar = () => {
       <div className="container-lg d-flex justify-content-between align-items-center">
         <Link className="navbar-brand" to="/">
           <img src={logo} alt="Seatable Logo" />
+          <p hidden>periodic tables</p>
         </Link>
         <button
           className="btn btn-light"

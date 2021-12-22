@@ -22,27 +22,27 @@ const ReservationListItem = ({ reservation, cancelButtonClickHandler }) => {
       <div className="col-12 col-md-6 col-xl-8 d-flex flex-row flex-wrap">
         <div className="d-flex align-items-xl-center col-5 col-sm-4 col-xl-2 pb-2 p-xl-0">
           <p className="p-bold">
-            <i class="bi bi-clock me-2"></i>
+            <i className="bi bi-clock me-2"></i>
             {formatTime(reservation.reservation_time)}
           </p>
         </div>
         <div className="d-flex align-items-xl-center col-7 col-sm-8 col-xl-4">
           <p>
-            <i class="bi bi-person me-2"></i>
+            <i className="bi bi-person me-2"></i>
             {reservation.first_name} {reservation.last_name} (
             {reservation.people})
           </p>
         </div>
         <div className="d-flex align-items-xl-center col-5 col-sm-4 col-xl-3 order-xl-3">
           <p data-reservation-id-status={reservation_id}>
-            <i class="bi bi-clipboard-check me-2"></i>
+            <i className="bi bi-clipboard-check me-2"></i>
             {reservation.status[0].toUpperCase() +
               reservation.status.substring(1)}
           </p>
         </div>
         <div className="d-flex align-items-xl-center col-7 col-sm-8 col-xl-3">
           <p>
-            <i class="bi bi-telephone me-2"></i>
+            <i className="bi bi-telephone me-2"></i>
             {reservation.mobile_number}
           </p>
         </div>

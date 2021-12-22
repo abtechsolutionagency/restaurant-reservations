@@ -66,7 +66,7 @@ const ReservationList = ({
             className="btn btn-primary flex-fill flex-sm-grow-0"
             onClick={() => history.push("/reservations/new")}
           >
-            <i class="bi bi-plus-circle-fill me-2"></i>New Reservation
+            <i className="bi bi-plus-circle-fill me-2"></i>New Reservation
           </button>
         </div>
       </div>
