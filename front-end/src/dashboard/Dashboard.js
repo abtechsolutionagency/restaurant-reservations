@@ -22,8 +22,10 @@ import TimeDisplay from "./TimeDisplay";
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+  const [reservationsLoaded, setReservationsLoaded] = useState(false);
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
+  const [tablesLoaded, setTablesLoaded] = useState(false);
   const history = useHistory();
   const query = useQuery();
 
@@ -37,19 +39,31 @@ function Dashboard({ date }) {
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
+    setReservationsLoaded(false);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
-      .catch(setReservationsError);
-    return () => abortController.abort();
+      .catch(setReservationsError)
+      .then(setReservationsLoaded(true));
+    return () => {
+      abortController.abort();
+      setReservationsLoaded(false);
+    };
   }
 
   function loadTables() {
     const abortController = new AbortController();
     setTablesError(null);
-    listTables(abortController.signal).then(setTables).catch(setTablesError);
-    return () => abortController.abort();
+    listTables(abortController.signal)
+      .then(setTables)
+      .catch(setTablesError)
+      .then(setTablesLoaded(true));
+    return () => {
+      abortController.abort();
+      setTablesLoaded(false);
+    };
   }
 
+  // Handlers for changing dates
   const todayButtonHandler = () => {
     history.push("/dashboard");
   };
@@ -64,6 +78,7 @@ function Dashboard({ date }) {
     history.push(`/dashboard?date=${nextDay}`);
   };
 
+  // Handler for finishing table
   const finishButtonHandler = async id => {
     const confirm = window.confirm(
       "Is this table ready to seat new guests? This cannot be undone."
@@ -79,6 +94,7 @@ function Dashboard({ date }) {
     }
   };
 
+  // Handler for canceling a reservation
   const cancelButtonHandler = async id => {
     const confirm = window.confirm(
       "Do you want to cancel this reservation? This cannot be undone."
@@ -91,6 +107,28 @@ function Dashboard({ date }) {
         setReservationsError(error);
       }
     }
+  };
+
+  const loadedReservations = () => {
+    if (reservationsLoaded) {
+      return (
+        <ReservationList
+          date={new Date(date.replace(/-/g, "/")).toLocaleDateString("en-US")}
+          reservations={reservations}
+          cancelButtonHandler={cancelButtonHandler}
+        />
+      );
+    }
+    return "loading reservations";
+  };
+
+  const loadedTables = () => {
+    if (tablesLoaded) {
+      return (
+        <TablesList tables={tables} finishButtonHandler={finishButtonHandler} />
+      );
+    }
+    return "loading tables";
   };
 
   return (
@@ -113,16 +151,45 @@ function Dashboard({ date }) {
       </header>
 
       <ErrorAlert error={reservationsError} />
-      <ReservationList
-        date={new Date(date.replace(/-/g, "/")).toLocaleDateString("en-US")}
-        reservations={reservations}
-        cancelButtonHandler={cancelButtonHandler}
-        previousDayButtonHandler={previousDayButtonHandler}
-        todayButtonHandler={todayButtonHandler}
-        nextDayButtonHandler={nextDayButtonHandler}
-      />
+      <div className="reservation-container p-3 p-md-4">
+        <div className="d-flex flex-column flex-sm-row justify-content-sm-between mb-3">
+          <div className="date-buttons col-sm-4 d-flex flex-row mb-2 mb-sm-0">
+            <button
+              type="button"
+              className="btn btn-outline-primary me-1 flex-sm-grow-0 flex-grow-1"
+              onClick={() => previousDayButtonHandler()}
+            >
+              Prev
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-primary me-1 flex-sm-grow-0 flex-grow-1"
+              onClick={() => todayButtonHandler()}
+            >
+              Today
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-primary flex-sm-grow-0 flex-grow-1"
+              onClick={() => nextDayButtonHandler()}
+            >
+              Next
+            </button>
+          </div>
+          <button
+            type="button"
+            name="New Reservation"
+            className="btn btn-primary "
+            onClick={() => history.push("/reservations/new")}
+          >
+            <i className="bi bi-plus-circle-fill me-2"></i>New Reservation
+          </button>
+        </div>
+        {loadedReservations()}
+      </div>
+
       <ErrorAlert error={tablesError} />
-      <TablesList tables={tables} finishButtonHandler={finishButtonHandler} />
+      {loadedTables()}
     </main>
   );
 }

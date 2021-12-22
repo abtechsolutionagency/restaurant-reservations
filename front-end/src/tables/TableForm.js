@@ -11,58 +11,56 @@ const TableForm = ({
 }) => {
   const history = useHistory();
 
-  const handleCancel = () => history.goBack();
-
   return (
-    <div className="container">
+    <div>
       <ErrorAlert error={error} />
-      <h1>Create a New Table</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-floating mb-3">
-          <input
-            type="text"
-            name="table_name"
-            className="form-control"
-            id="table_name"
-            autoComplete={"off"}
-            placeholder={"Table Name"}
-            value={table.table_name}
-            onChange={handleTableNameChange}
-            required
-          />
-          <label htmlFor="table_name" className="form-label">
-            Table name
-          </label>
-        </div>
+      <div className="form-container p-4 p-md-5">
+        <form onSubmit={handleSubmit}>
+          <div className="form-floating mb-3">
+            <input
+              type="text"
+              name="table_name"
+              className="form-control"
+              id="table_name"
+              autoComplete={"off"}
+              placeholder={"Table Name"}
+              value={table.table_name}
+              onChange={handleTableNameChange}
+              required
+            />
+            <label htmlFor="table_name" className="form-label">
+              Table name
+            </label>
+          </div>
 
-        <div className="form-floating mb-3">
-          <input
-            type="number"
-            name="capacity"
-            className="form-control"
-            id="capacity"
-            placeholder="1"
-            value={table.capacity}
-            onChange={handleCapacityChange}
-            required
-          />
-          <label htmlFor="capacity" className="form-label">
-            Capacity
-          </label>
-        </div>
-        <div className="row">
-          <div className="col-auto pr-0 mr-2">
-            <button className="btn btn-secondary" onClick={handleCancel}>
+          <div className="form-floating mb-3">
+            <input
+              type="number"
+              name="capacity"
+              className="form-control"
+              id="capacity"
+              placeholder="1"
+              value={table.capacity}
+              onChange={handleCapacityChange}
+              required
+            />
+            <label htmlFor="capacity" className="form-label">
+              Capacity
+            </label>
+          </div>
+          <div className="d-flex justify-content-end">
+            <button
+              className="btn btn-secondary col-6 col-md-2 me-2"
+              onClick={() => history.goBack()}
+            >
               Cancel
             </button>
-          </div>
-          <div className="col-auto px-0">
-            <button className="btn btn-primary" type="submit">
+            <button className="btn btn-primary col-6 col-md-2" type="submit">
               Submit
             </button>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

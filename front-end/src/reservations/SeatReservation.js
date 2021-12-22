@@ -61,7 +61,7 @@ const SeatReservation = () => {
             className="d-flex flex-column align-items-center"
             onSubmit={handleSubmit}
           >
-            <div className="col-12 col-sm-10 col-lg-6 col-xl-4 d-flex flex-column mb-3">
+            <div className="col-12 col-sm-10 col-lg-5 d-flex flex-column mb-3">
               <label htmlFor="table_id" className="me-2">
                 <h3>Choose a table to seat</h3>
               </label>
@@ -70,7 +70,7 @@ const SeatReservation = () => {
                 name="table_id"
                 value={selectedTable}
                 onChange={handleTableChange}
-                className="mt-2 p-2"
+                className="form-select mt-2 p-2"
               >
                 <option key="0" value="">
                   Select a Table:
@@ -84,11 +84,17 @@ const SeatReservation = () => {
                 })}
               </select>
             </div>
-            <div className="col-12 col-sm-10 col-lg-6 col-xl-4">
-              <button className="btn btn-secondary" onClick={handleCancel}>
+            <div className="col-12 col-sm-10 col-lg-5 d-flex justify-content-sm-end">
+              <button
+                className="btn btn-secondary flex-grow-1 flex-md-grow-0 me-1"
+                onClick={handleCancel}
+              >
                 Cancel
               </button>
-              <button className="btn btn-primary" type="submit">
+              <button
+                className="btn btn-primary flex-grow-1 flex-md-grow-0 ms-1"
+                type="submit"
+              >
                 Submit
               </button>
             </div>

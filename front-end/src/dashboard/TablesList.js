@@ -8,7 +8,7 @@ const TablesList = ({ tables, finishButtonHandler }) => {
     <div className="my-3 p-3">
       <div className="row d-flex flex-column flex-sm-row flex-wrap p-2">
         <div className="col col-sm-7 d-md-flex flex-column align-items-start mb-2">
-          <h2>{tables.length} tables</h2>
+          <h2>{tables.length} Tables</h2>
         </div>
         <div className="col col-sm-5 d-flex justify-content-sm-end align-items-sm-start mt-2 mt-sm-0">
           <button

@@ -33,7 +33,8 @@ const CreateTable = () => {
   };
 
   return (
-    <>
+    <div className="container">
+      <h1 className="my-4">Create a New Table</h1>
       <TableForm
         table={table}
         error={error}
@@ -41,7 +42,7 @@ const CreateTable = () => {
         handleCapacityChange={handleCapacityChange}
         handleSubmit={handleSubmit}
       />
-    </>
+    </div>
   );
 };
 

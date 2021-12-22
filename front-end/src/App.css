@@ -1,8 +1,5 @@
 :root {
   --dark-text: #1f2329;
-  --light-text: #49505a;
-  --light-gray: #f8f9fb;
-  --light-gray-outline: #eef1f6;
   --primary-blue: #2f73da;
 }
 
@@ -50,8 +47,8 @@ p {
 }
 
 button.btn.btn-primary {
-  background-color: #2f73da;
-  border: 1px solid #2f73da;
+  background-color: var(--primary-blue);
+  border: 1px solid var(--primary-blue);
 }
 
 button.btn.btn-primary:hover {
@@ -61,7 +58,7 @@ button.btn.btn-primary:hover {
 
 button.btn.btn-outline-primary {
   background-color: #ffffff;
-  color: #2f73da;
+  color: var(--primary-blue);
   border: 1px solid #cdd3dd;
 }
 
