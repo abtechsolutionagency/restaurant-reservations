@@ -101,7 +101,7 @@ const EditReservation = () => {
 
   return (
     <div className="container">
-      <h1>Edit Reservation</h1>
+      <h1 className="my-4">Edit Reservation</h1>
       <ErrorAlert error={error} />
       <ReservationForm
         reservation={reservation}

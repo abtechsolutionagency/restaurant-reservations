@@ -7,8 +7,8 @@ import { today } from "../utils/date-time";
 import CreateReservation from "../reservations/CreateReservation";
 import CreateTable from "../tables/CreateTable";
 import SeatReservation from "../reservations/SeatReservation";
-import SearchReservations from "../search/SearchReservations";
 import EditReservation from "../reservations/EditReservation";
+import SearchReservations from "../search/SearchReservations";
 
 /**
  * Defines all the routes for the application.

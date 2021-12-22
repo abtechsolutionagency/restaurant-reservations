@@ -55,7 +55,7 @@ const CreateReservation = () => {
 
   return (
     <div className="container">
-      <h1>Create a new reservation</h1>
+      <h1 className="my-4">Create a new reservation</h1>
       <ReservationForm
         reservation={reservation}
         error={error}

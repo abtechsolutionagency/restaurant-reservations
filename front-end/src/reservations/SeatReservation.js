@@ -53,41 +53,47 @@ const SeatReservation = () => {
       <ErrorAlert error={tablesError} />
       <ErrorAlert error={selectedTableError} />
       <div>
-        <h1>
+        <h1 className="my-4">
           Seat Reservation for {reservation.first_name} {reservation.last_name}
         </h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="table_id">Choose a table to seat</label>
-          <select
-            id="table_id"
-            name="table_id"
-            value={selectedTable}
-            onChange={handleTableChange}
+        <div className="form-container p-4 p-md-5">
+          <form
+            className="d-flex flex-column align-items-center"
+            onSubmit={handleSubmit}
           >
-            <option key="0" value="">
-              Select a Table:
-            </option>
-            {tables.map(table => {
-              return (
-                <option key={table.table_id} value={table.table_id}>
-                  {table.table_name} - {table.capacity}
+            <div className="col-12 col-sm-10 col-lg-6 col-xl-4 d-flex flex-column mb-3">
+              <label htmlFor="table_id" className="me-2">
+                <h3>Choose a table to seat</h3>
+              </label>
+              <select
+                id="table_id"
+                name="table_id"
+                value={selectedTable}
+                onChange={handleTableChange}
+                className="mt-2 p-2"
+              >
+                <option key="0" value="">
+                  Select a Table:
                 </option>
-              );
-            })}
-          </select>
-          <div className="row">
-            <div className="col-auto pr-0 mr-2">
+                {tables.map(table => {
+                  return (
+                    <option key={table.table_id} value={table.table_id}>
+                      {table.table_name} - {table.capacity}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="col-12 col-sm-10 col-lg-6 col-xl-4">
               <button className="btn btn-secondary" onClick={handleCancel}>
                 Cancel
               </button>
-            </div>
-            <div className="col-auto px-0">
               <button className="btn btn-primary" type="submit">
                 Submit
               </button>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
