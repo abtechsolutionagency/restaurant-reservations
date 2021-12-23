@@ -11,6 +11,16 @@ const TableForm = ({
 }) => {
   const history = useHistory();
 
+  const handleEnter = event => {
+    if (event.key.toLowerCase() === "enter") {
+      event.preventDefault();
+    }
+  };
+
+  const handleCancel = () => {
+    history.goBack();
+  };
+
   return (
     <div>
       <ErrorAlert error={error} />
@@ -26,6 +36,7 @@ const TableForm = ({
               placeholder={"Table Name"}
               value={table.table_name}
               onChange={handleTableNameChange}
+              onKeyDown={handleEnter}
               required
             />
             <label htmlFor="table_name" className="form-label">
@@ -42,6 +53,7 @@ const TableForm = ({
               placeholder="1"
               value={table.capacity}
               onChange={handleCapacityChange}
+              onKeyDown={handleEnter}
               required
             />
             <label htmlFor="capacity" className="form-label">
@@ -49,15 +61,19 @@ const TableForm = ({
             </label>
           </div>
           <div className="d-flex justify-content-end">
-            <button
-              className="btn btn-secondary col-6 col-md-2 me-2"
-              onClick={() => history.goBack()}
-            >
-              Cancel
-            </button>
-            <button className="btn btn-primary col-6 col-md-2" type="submit">
-              Submit
-            </button>
+            <div className="col-6 col-md-2 d-flex pe-1">
+              <button
+                className="btn btn-secondary flex-fill"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+            </div>
+            <div className="col-6 col-md-2 d-flex ps-1">
+              <button className="btn btn-primary flex-fill" type="submit">
+                Submit
+              </button>
+            </div>
           </div>
         </form>
       </div>

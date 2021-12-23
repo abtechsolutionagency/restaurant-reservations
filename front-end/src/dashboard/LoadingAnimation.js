@@ -3,7 +3,7 @@ import "./LoadingAnimation.css";
 
 const LoadingAnimation = () => {
   return (
-    <div className="container d-flex justify-content-center align-items-center">
+    <div className="loading-wrapper container d-flex justify-content-center align-items-center">
       <div className="loader">Loading...</div>
     </div>
   );

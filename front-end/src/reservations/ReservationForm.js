@@ -15,6 +15,16 @@ const ReservationForm = ({
 }) => {
   const history = useHistory();
 
+  const handleEnter = event => {
+    if (event.key.toLowerCase() === "enter") {
+      event.preventDefault();
+    }
+  };
+
+  const handleCancel = () => {
+    history.goBack();
+  };
+
   return (
     <div>
       <ErrorAlert error={error} />
@@ -30,6 +40,7 @@ const ReservationForm = ({
               placeholder={"Customer's first name"}
               value={reservation.first_name}
               onChange={handleFirstNameChange}
+              onKeyDown={handleEnter}
               required
             />
             <label htmlFor="first_name" className="form-label">
@@ -46,6 +57,7 @@ const ReservationForm = ({
               placeholder={"Customer's last name"}
               value={reservation.last_name}
               onChange={handleLastNameChange}
+              onKeyDown={handleEnter}
               required
             />
             <label htmlFor="last_name" className="form-label">
@@ -63,6 +75,7 @@ const ReservationForm = ({
               maxLength={12}
               value={reservation.mobile_number}
               onChange={handleMobileNumberChange}
+              onKeyDown={handleEnter}
               required
             />
             <label htmlFor="mobile_number" className="form-label">
@@ -79,6 +92,7 @@ const ReservationForm = ({
               pattern="\d{4}-\d{2}-\d{2}"
               value={reservation.reservation_date}
               onChange={handleReservationDateChange}
+              onKeyDown={handleEnter}
               required
             />
             <label htmlFor="reservation_date" className="form-label">
@@ -95,6 +109,7 @@ const ReservationForm = ({
               pattern="[0-9]{2}:[0-9]{2}"
               value={reservation.reservation_time}
               onChange={handleReservationTimeChange}
+              onKeyDown={handleEnter}
               required
             />
             <label htmlFor="reservation_time" className="form-label">
@@ -110,6 +125,7 @@ const ReservationForm = ({
               placeholder="1"
               value={reservation.people}
               onChange={handlePeopleNumberChange}
+              onKeyDown={handleEnter}
               required
             />
             <label htmlFor="people" className="form-label">
@@ -117,15 +133,19 @@ const ReservationForm = ({
             </label>
           </div>
           <div className="d-flex justify-content-end">
-            <button
-              className="btn btn-secondary col-6 col-md-2 me-2"
-              onClick={() => history.goBack()}
-            >
-              Cancel
-            </button>
-            <button className="btn btn-primary col-6 col-md-2" type="submit">
-              Submit
-            </button>
+            <div className="col-6 col-md-2 d-flex pe-1">
+              <button
+                className="btn btn-secondary flex-fill"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+            </div>
+            <div className="col-6 col-md-2 d-flex ps-1">
+              <button className="btn btn-primary flex-fill" type="submit">
+                Submit
+              </button>
+            </div>
           </div>
         </form>
       </div>

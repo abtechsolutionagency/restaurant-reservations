@@ -9,7 +9,7 @@ import ErrorAlert from "../layout/ErrorAlert";
 import ReservationList from "./ReservationList";
 import useQuery from "../utils/useQuery";
 import { useHistory } from "react-router-dom";
-import { next, previous } from "../utils/date-time";
+import { next, previous, today } from "../utils/date-time";
 import TablesList from "./TablesList";
 import TimeDisplay from "./TimeDisplay";
 import LoadingAnimation from "./LoadingAnimation";
@@ -38,16 +38,17 @@ function Dashboard({ date }) {
   useEffect(loadTables, []);
 
   function loadDashboard() {
+    setReservationsLoading(true);
     const abortController = new AbortController();
     setReservationsError(null);
-    setReservationsLoading(true);
     listReservations({ date }, abortController.signal)
-      .then(setReservations)
-      .catch(setReservationsError)
-      .then(setReservationsLoading(false));
+      .then(reservations => {
+        setReservations(reservations);
+        setReservationsLoading(false);
+      })
+      .catch(setReservationsError);
     return () => {
       abortController.abort();
-      setReservationsLoading(true);
     };
   }
 
@@ -56,12 +57,13 @@ function Dashboard({ date }) {
     setTablesError(null);
     setTablesLoading(true);
     listTables(abortController.signal)
-      .then(setTables)
-      .catch(setTablesError)
-      .then(setTablesLoading(false));
+      .then(tables => {
+        setTables(tables);
+        setTablesLoading(false);
+      })
+      .catch(setTablesError);
     return () => {
       abortController.abort();
-      setTablesLoading(true);
     };
   }
 
@@ -71,11 +73,13 @@ function Dashboard({ date }) {
   };
 
   const previousDayButtonHandler = () => {
+    setReservationsLoading(true);
     const previousDay = previous(date);
     history.push(`/dashboard?date=${previousDay}`);
   };
 
   const nextDayButtonHandler = () => {
+    setReservationsLoading(true);
     const nextDay = next(date);
     history.push(`/dashboard?date=${nextDay}`);
   };
@@ -111,24 +115,22 @@ function Dashboard({ date }) {
     }
   };
 
-  const loadedReservations = () => {
-    if (reservationsLoading) {
-      return <LoadingAnimation />;
-    }
-    return (
-      <ReservationList
-        date={new Date(date.replace(/-/g, "/")).toLocaleDateString("en-US")}
-        reservations={reservations}
-        cancelButtonHandler={cancelButtonHandler}
-      />
+  const getDisplayDate = () => {
+    let displayDate = new Date(date.replace(/-/g, "/")).toLocaleDateString(
+      "en-US"
     );
+    if (!query.get("date") || query.get("date") === today()) {
+      displayDate = "Today";
+    }
+    return displayDate;
   };
 
   const loadedTables = () => {
-    if (tablesLoading) {
-      return <LoadingAnimation />;
-    }
-    return (
+    return tablesLoading ? (
+      <div className="p-3">
+        <LoadingAnimation />
+      </div>
+    ) : (
       <TablesList tables={tables} finishButtonHandler={finishButtonHandler} />
     );
   };
@@ -187,7 +189,14 @@ function Dashboard({ date }) {
             <i className="bi bi-plus-circle-fill me-2"></i>New Reservation
           </button>
         </div>
-        {loadedReservations()}
+        <div className="col col-sm-7 d-md-flex flex-column align-items-start">
+          <h2>Reservations for {getDisplayDate()}</h2>
+        </div>
+        <ReservationList
+          reservations={reservations}
+          cancelButtonHandler={cancelButtonHandler}
+          reservationsLoading={reservationsLoading}
+        />
       </div>
 
       <ErrorAlert error={tablesError} />
