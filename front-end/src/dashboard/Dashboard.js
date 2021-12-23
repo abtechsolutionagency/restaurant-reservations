@@ -12,7 +12,6 @@ import { useHistory } from "react-router-dom";
 import { next, previous } from "../utils/date-time";
 import TablesList from "./TablesList";
 import TimeDisplay from "./TimeDisplay";
-import LoadingAnimation from "../layout/LoadingAnimation";
 
 /**
  * Defines the dashboard page.
@@ -120,7 +119,7 @@ function Dashboard({ date }) {
         />
       );
     }
-    return <LoadingAnimation />;
+    return "Loading...";
   };
 
   const loadedTables = () => {
@@ -129,7 +128,7 @@ function Dashboard({ date }) {
         <TablesList tables={tables} finishButtonHandler={finishButtonHandler} />
       );
     }
-    return <LoadingAnimation />;
+    return "Loading...";
   };
 
   return (
