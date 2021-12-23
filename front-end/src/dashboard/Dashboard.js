@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { next, previous } from "../utils/date-time";
 import TablesList from "./TablesList";
 import TimeDisplay from "./TimeDisplay";
+import LoadingAnimation from "./LoadingAnimation";
 
 /**
  * Defines the dashboard page.
@@ -22,10 +23,10 @@ import TimeDisplay from "./TimeDisplay";
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
-  const [reservationsLoaded, setReservationsLoaded] = useState(false);
+  const [reservationsLoading, setReservationsLoading] = useState(true);
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
-  const [tablesLoaded, setTablesLoaded] = useState(false);
+  const [tablesLoading, setTablesLoading] = useState(true);
   const history = useHistory();
   const query = useQuery();
 
@@ -39,27 +40,28 @@ function Dashboard({ date }) {
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
-    setReservationsLoaded(false);
+    setReservationsLoading(true);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError)
-      .then(setReservationsLoaded(true));
+      .then(setReservationsLoading(false));
     return () => {
       abortController.abort();
-      setReservationsLoaded(false);
+      setReservationsLoading(true);
     };
   }
 
   function loadTables() {
     const abortController = new AbortController();
     setTablesError(null);
+    setTablesLoading(true);
     listTables(abortController.signal)
       .then(setTables)
       .catch(setTablesError)
-      .then(setTablesLoaded(true));
+      .then(setTablesLoading(false));
     return () => {
       abortController.abort();
-      setTablesLoaded(false);
+      setTablesLoading(true);
     };
   }
 
@@ -110,25 +112,25 @@ function Dashboard({ date }) {
   };
 
   const loadedReservations = () => {
-    if (reservationsLoaded) {
-      return (
-        <ReservationList
-          date={new Date(date.replace(/-/g, "/")).toLocaleDateString("en-US")}
-          reservations={reservations}
-          cancelButtonHandler={cancelButtonHandler}
-        />
-      );
+    if (reservationsLoading) {
+      return <LoadingAnimation />;
     }
-    return "Loading...";
+    return (
+      <ReservationList
+        date={new Date(date.replace(/-/g, "/")).toLocaleDateString("en-US")}
+        reservations={reservations}
+        cancelButtonHandler={cancelButtonHandler}
+      />
+    );
   };
 
   const loadedTables = () => {
-    if (tablesLoaded) {
-      return (
-        <TablesList tables={tables} finishButtonHandler={finishButtonHandler} />
-      );
+    if (tablesLoading) {
+      return <LoadingAnimation />;
     }
-    return "Loading...";
+    return (
+      <TablesList tables={tables} finishButtonHandler={finishButtonHandler} />
+    );
   };
 
   return (

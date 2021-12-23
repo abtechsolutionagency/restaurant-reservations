@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 const TablesList = ({ tables, finishButtonHandler }) => {
   const history = useHistory();
   return (
-    <div className="my-3 p-3">
+    <div className="my-3 p-2 p-md-3">
       <div className="row d-flex flex-column flex-sm-row flex-wrap p-2">
         <div className="col col-sm-7 d-md-flex flex-column align-items-start mb-2">
           <h2>{tables.length} Tables</h2>
