@@ -7,7 +7,9 @@ const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
 
   const formatTime = () => {
     const time = new Date(
-      `${reservation.reservation_date} ${reservation.reservation_time}`
+      `${reservation.reservation_date.replace(/-/g, "/")} ${
+        reservation.reservation_time
+      }`
     );
     const options = {
       hour: "numeric",
