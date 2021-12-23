@@ -11,11 +11,7 @@ const ReservationList = ({
   initialState = true,
 }) => {
   const displayLoading = () => {
-    return (
-      <div className="p-3">
-        <LoadingAnimation />
-      </div>
-    );
+    return <LoadingAnimation />;
   };
 
   const displyReservationList = () => {
