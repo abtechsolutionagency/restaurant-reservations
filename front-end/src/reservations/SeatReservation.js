@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import LoadingAnimation from "../dashboard/LoadingAnimation";
 import ErrorAlert from "../layout/ErrorAlert";
 import { getReservation, listTables, seatReservation } from "../utils/api";
 
@@ -8,6 +9,7 @@ const SeatReservation = () => {
   const history = useHistory();
 
   const [reservation, setReservation] = useState({});
+  const [reservationLoaded, setReservationLoaded] = useState(false);
   const [reservationError, setReservationError] = useState(null);
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
@@ -28,7 +30,10 @@ const SeatReservation = () => {
     const abortController = new AbortController();
     setReservationError(null);
     getReservation(reservation_id, abortController.signal)
-      .then(setReservation)
+      .then(foundReservation => {
+        setReservationLoaded(true);
+        setReservation(foundReservation);
+      })
       .catch(setReservationError);
     return () => abortController.abort();
   }
@@ -53,52 +58,57 @@ const SeatReservation = () => {
       <ErrorAlert error={tablesError} />
       <ErrorAlert error={selectedTableError} />
       <div>
-        <h1 className="my-4">
-          Seat Reservation for {reservation.first_name} {reservation.last_name}
-        </h1>
+        <h1 className="my-4">Seat Reservation</h1>
         <div className="form-container p-4 p-md-5">
-          <form
-            className="d-flex flex-column align-items-center"
-            onSubmit={handleSubmit}
-          >
-            <div className="col-12 col-sm-10 col-lg-5 d-flex flex-column mb-3">
-              <label htmlFor="table_id" className="me-2">
-                <h3>Choose a table to seat</h3>
-              </label>
-              <select
-                id="table_id"
-                name="table_id"
-                value={selectedTable}
-                onChange={handleTableChange}
-                className="form-select mt-2 p-2"
-              >
-                <option key="0" value="">
-                  Select a Table:
-                </option>
-                {tables.map(table => {
-                  return (
-                    <option key={table.table_id} value={table.table_id}>
-                      {table.table_name} - {table.capacity}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="col-12 col-sm-10 col-lg-5 d-flex justify-content-sm-end">
-              <button
-                className="btn btn-secondary flex-grow-1 flex-md-grow-0 me-1"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-              <button
-                className="btn btn-primary flex-grow-1 flex-md-grow-0 ms-1"
-                type="submit"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
+          {reservationLoaded ? (
+            <form
+              className="d-flex flex-column align-items-center"
+              onSubmit={handleSubmit}
+            >
+              <div className="col-12 col-sm-10 col-lg-5 d-flex flex-column mb-3">
+                <label htmlFor="table_id" className="me-2">
+                  <h3>
+                    Choose a table to seat {reservation.first_name}{" "}
+                    {reservation.last_name}
+                  </h3>
+                </label>
+                <select
+                  id="table_id"
+                  name="table_id"
+                  value={selectedTable}
+                  onChange={handleTableChange}
+                  className="form-select mt-2 p-2"
+                >
+                  <option key="0" value="">
+                    Select a Table:
+                  </option>
+                  {tables.map(table => {
+                    return (
+                      <option key={table.table_id} value={table.table_id}>
+                        {table.table_name} - {table.capacity}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="col-12 col-sm-10 col-lg-5 d-flex justify-content-sm-end">
+                <button
+                  className="btn btn-secondary flex-grow-1 flex-md-grow-0 me-1"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn btn-primary flex-grow-1 flex-md-grow-0 ms-1"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          ) : (
+            <LoadingAnimation />
+          )}
         </div>
       </div>
     </div>

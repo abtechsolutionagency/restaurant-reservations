@@ -85,33 +85,29 @@ function Dashboard({ date }) {
   };
 
   // Handler for finishing table
-  const finishButtonHandler = async id => {
+  const finishButtonHandler = id => {
     const confirm = window.confirm(
       "Is this table ready to seat new guests? This cannot be undone."
     );
     if (confirm) {
-      try {
-        await finishTable(id);
-      } catch (error) {
-        setTablesError(error);
-      }
-      loadTables();
-      loadDashboard();
+      finishTable(id)
+        .then(() => {
+          loadTables();
+          loadDashboard();
+        })
+        .catch(setTablesError);
     }
   };
 
   // Handler for canceling a reservation
-  const cancelButtonHandler = async id => {
+  const cancelButtonHandler = id => {
     const confirm = window.confirm(
       "Do you want to cancel this reservation? This cannot be undone."
     );
     if (confirm) {
-      try {
-        await cancelReservation(id);
-        loadDashboard();
-      } catch (error) {
-        setReservationsError(error);
-      }
+      cancelReservation(id)
+        .then(() => loadDashboard())
+        .catch(setReservationsError);
     }
   };
 

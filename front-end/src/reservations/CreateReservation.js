@@ -17,24 +17,11 @@ const CreateReservation = () => {
   });
   const [error, setError] = useState(null);
 
-  const handleFirstNameChange = event => {
-    setReservation({ ...reservation, first_name: event.target.value });
-  };
-
-  const handleLastNameChange = event => {
-    setReservation({ ...reservation, last_name: event.target.value });
-  };
-
-  const handleMobileNumberChange = event => {
-    setReservation({ ...reservation, mobile_number: event.target.value });
-  };
-
-  const handleReservationDateChange = event => {
-    setReservation({ ...reservation, reservation_date: event.target.value });
-  };
-
-  const handleReservationTimeChange = event => {
-    setReservation({ ...reservation, reservation_time: event.target.value });
+  const handleChange = event => {
+    setReservation({
+      ...reservation,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handlePeopleNumberChange = event => {
@@ -59,11 +46,7 @@ const CreateReservation = () => {
       <ReservationForm
         reservation={reservation}
         error={error}
-        handleFirstNameChange={handleFirstNameChange}
-        handleLastNameChange={handleLastNameChange}
-        handleMobileNumberChange={handleMobileNumberChange}
-        handleReservationDateChange={handleReservationDateChange}
-        handleReservationTimeChange={handleReservationTimeChange}
+        handleChange={handleChange}
         handlePeopleNumberChange={handlePeopleNumberChange}
         handleSubmit={handleSubmit}
       />

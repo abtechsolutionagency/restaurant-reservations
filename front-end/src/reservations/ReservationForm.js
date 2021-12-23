@@ -5,11 +5,7 @@ import ErrorAlert from "../layout/ErrorAlert";
 const ReservationForm = ({
   reservation,
   error,
-  handleFirstNameChange,
-  handleLastNameChange,
-  handleMobileNumberChange,
-  handleReservationDateChange,
-  handleReservationTimeChange,
+  handleChange,
   handlePeopleNumberChange,
   handleSubmit,
 }) => {
@@ -39,7 +35,7 @@ const ReservationForm = ({
               autoComplete={"off"}
               placeholder={"Customer's first name"}
               value={reservation.first_name}
-              onChange={handleFirstNameChange}
+              onChange={handleChange}
               onKeyDown={handleEnter}
               required
             />
@@ -56,7 +52,7 @@ const ReservationForm = ({
               autoComplete={"off"}
               placeholder={"Customer's last name"}
               value={reservation.last_name}
-              onChange={handleLastNameChange}
+              onChange={handleChange}
               onKeyDown={handleEnter}
               required
             />
@@ -74,7 +70,7 @@ const ReservationForm = ({
               placeholder={"123-456-7890"}
               maxLength={12}
               value={reservation.mobile_number}
-              onChange={handleMobileNumberChange}
+              onChange={handleChange}
               onKeyDown={handleEnter}
               required
             />
@@ -91,7 +87,7 @@ const ReservationForm = ({
               placeholder="YYYY-MM-DD"
               pattern="\d{4}-\d{2}-\d{2}"
               value={reservation.reservation_date}
-              onChange={handleReservationDateChange}
+              onChange={handleChange}
               onKeyDown={handleEnter}
               required
             />
@@ -108,7 +104,7 @@ const ReservationForm = ({
               placeholder="HH:MM"
               pattern="[0-9]{2}:[0-9]{2}"
               value={reservation.reservation_time}
-              onChange={handleReservationTimeChange}
+              onChange={handleChange}
               onKeyDown={handleEnter}
               required
             />
