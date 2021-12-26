@@ -15,38 +15,37 @@ const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
     return time.toLocaleString("en-US", options);
   };
 
-  return (
-    <div className="card d-flex flex-row flex-wrap justify-content-between p-3 p-md-4 mb-1">
-      <div className="col-12 col-md-6 col-xl-8 d-flex flex-row flex-wrap">
-        <div className="d-flex align-items-xl-center col-5 col-sm-4 col-xl-2 pb-2 p-xl-0">
-          <p className="p-bold">
-            <i className="bi bi-clock me-2"></i>
-            {formatTime(reservation.reservation_time)}
-          </p>
+  if (reservation.status === "booked") {
+    return (
+      <div className="card d-flex flex-row flex-wrap justify-content-between p-3 p-md-4 mb-1">
+        <div className="col-12 col-md-6 col-xl-8 d-flex flex-row flex-wrap">
+          <div className="d-flex align-items-xl-center col-5 col-sm-4 col-xl-2 pb-2 p-xl-0">
+            <p className="p-bold">
+              <i className="bi bi-clock me-2"></i>
+              {formatTime(reservation.reservation_time)}
+            </p>
+          </div>
+          <div className="d-flex align-items-xl-center col-7 col-sm-8 col-xl-4">
+            <p>
+              <i className="bi bi-person me-2"></i>
+              {reservation.first_name} {reservation.last_name} (
+              {reservation.people})
+            </p>
+          </div>
+          <div className="d-flex align-items-xl-center col-5 col-sm-4 col-xl-3 order-xl-3">
+            <p data-reservation-id-status={reservation_id}>
+              <i className="bi bi-clipboard-check me-2"></i>
+              {reservation.status[0].toUpperCase() +
+                reservation.status.substring(1)}
+            </p>
+          </div>
+          <div className="d-flex align-items-xl-center col-7 col-sm-8 col-xl-3">
+            <p>
+              <i className="bi bi-telephone me-2"></i>
+              {reservation.mobile_number}
+            </p>
+          </div>
         </div>
-        <div className="d-flex align-items-xl-center col-7 col-sm-8 col-xl-4">
-          <p>
-            <i className="bi bi-person me-2"></i>
-            {reservation.first_name} {reservation.last_name} (
-            {reservation.people})
-          </p>
-        </div>
-        <div className="d-flex align-items-xl-center col-5 col-sm-4 col-xl-3 order-xl-3">
-          <p data-reservation-id-status={reservation_id}>
-            <i className="bi bi-clipboard-check me-2"></i>
-            {reservation.status[0].toUpperCase() +
-              reservation.status.substring(1)}
-          </p>
-        </div>
-        <div className="d-flex align-items-xl-center col-7 col-sm-8 col-xl-3">
-          <p>
-            <i className="bi bi-telephone me-2"></i>
-            {reservation.mobile_number}
-          </p>
-        </div>
-      </div>
-
-      {reservation.status === "booked" && (
         <div className="col-12 col-md-6 col-xl-4 d-flex flex-row align-items-start align-items-md-center mt-3 mt-md-0">
           <button
             type="button"
@@ -82,7 +81,39 @@ const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
             </button>
           </Link>
         </div>
-      )}
+      </div>
+    );
+  }
+  return (
+    <div className="card d-flex flex-row flex-wrap justify-content-between p-3 p-md-4 mb-1">
+      <div className="col-12 col-xl-8 d-flex flex-row flex-wrap">
+        <div className="d-flex align-items-xl-center col-5 col-sm-4 col-md-2 col-xl-2 pb-2 p-xl-0">
+          <p className="p-bold">
+            <i className="bi bi-clock me-2"></i>
+            {formatTime(reservation.reservation_time)}
+          </p>
+        </div>
+        <div className="d-flex align-items-xl-center col-7 col-sm-8 col-md-4 col-xl-4">
+          <p>
+            <i className="bi bi-person me-2"></i>
+            {reservation.first_name} {reservation.last_name} (
+            {reservation.people})
+          </p>
+        </div>
+        <div className="d-flex align-items-xl-center col-5 col-sm-4 col-md-2 col-xl-3 order-md-4 order-xl-3">
+          <p data-reservation-id-status={reservation_id}>
+            <i className="bi bi-clipboard-check me-2"></i>
+            {reservation.status[0].toUpperCase() +
+              reservation.status.substring(1)}
+          </p>
+        </div>
+        <div className="d-flex align-items-xl-center col-7 col-sm-8 col-md-3 col-xl-3">
+          <p>
+            <i className="bi bi-telephone me-2"></i>
+            {reservation.mobile_number}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
