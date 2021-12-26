@@ -76,20 +76,22 @@ const EditReservation = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="my-4">Edit Reservation</h1>
-      <ErrorAlert error={error} />
-      {reservationLoaded ? (
-        <ReservationForm
-          reservation={reservation}
-          error={error}
-          handleChange={handleChange}
-          handlePeopleNumberChange={handlePeopleNumberChange}
-          handleSubmit={handleSubmit}
-        />
-      ) : (
-        <LoadingAnimation />
-      )}
+    <div className="container d-flex justify-content-center">
+      <div className="col-12 col-lg-8">
+        <h1 className="my-4">Edit Reservation</h1>
+        <ErrorAlert error={error} />
+        {reservationLoaded ? (
+          <ReservationForm
+            reservation={reservation}
+            error={error}
+            handleChange={handleChange}
+            handlePeopleNumberChange={handlePeopleNumberChange}
+            handleSubmit={handleSubmit}
+          />
+        ) : (
+          <LoadingAnimation />
+        )}
+      </div>
     </div>
   );
 };

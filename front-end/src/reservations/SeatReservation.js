@@ -53,7 +53,7 @@ const SeatReservation = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container ">
       <ErrorAlert error={reservationError} />
       <ErrorAlert error={tablesError} />
       <ErrorAlert error={selectedTableError} />

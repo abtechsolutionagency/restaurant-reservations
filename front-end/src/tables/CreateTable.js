@@ -33,15 +33,17 @@ const CreateTable = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="my-4">Create a New Table</h1>
-      <TableForm
-        table={table}
-        error={error}
-        handleTableNameChange={handleTableNameChange}
-        handleCapacityChange={handleCapacityChange}
-        handleSubmit={handleSubmit}
-      />
+    <div className="container d-flex justify-content-center">
+      <div className="col-12 col-lg-8">
+        <h1 className="my-4">Create a New Table</h1>
+        <TableForm
+          table={table}
+          error={error}
+          handleTableNameChange={handleTableNameChange}
+          handleCapacityChange={handleCapacityChange}
+          handleSubmit={handleSubmit}
+        />
+      </div>
     </div>
   );
 };

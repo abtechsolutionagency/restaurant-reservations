@@ -41,15 +41,17 @@ const CreateReservation = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="my-4">Create a new reservation</h1>
-      <ReservationForm
-        reservation={reservation}
-        error={error}
-        handleChange={handleChange}
-        handlePeopleNumberChange={handlePeopleNumberChange}
-        handleSubmit={handleSubmit}
-      />
+    <div className="container d-flex justify-content-center">
+      <div className="col-12 col-lg-8">
+        <h1 className="my-4">Create a new reservation</h1>
+        <ReservationForm
+          reservation={reservation}
+          error={error}
+          handleChange={handleChange}
+          handlePeopleNumberChange={handlePeopleNumberChange}
+          handleSubmit={handleSubmit}
+        />
+      </div>
     </div>
   );
 };
