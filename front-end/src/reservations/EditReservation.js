@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import LoadingAnimation from "../dashboard/LoadingAnimation";
-import ErrorAlert from "../layout/ErrorAlert";
 import { getReservation, updateReservation } from "../utils/api";
 import ReservationForm from "./ReservationForm";
 

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   cancelReservation,
   finishTable,
   listReservations,
   listTables,
 } from "../utils/api";
+import useQuery from "../utils/useQuery";
+import { next, previous, today } from "../utils/date-time";
+
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationList from "./ReservationList";
-import useQuery from "../utils/useQuery";
-import { useHistory } from "react-router-dom";
-import { next, previous, today } from "../utils/date-time";
 import TablesList from "./TablesList";
 import TimeDisplay from "./TimeDisplay";
 import LoadingAnimation from "./LoadingAnimation";
@@ -20,7 +21,7 @@ import LoadingAnimation from "./LoadingAnimation";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date }) {
+const Dashboard = ({ date }) => {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const [reservationsLoading, setReservationsLoading] = useState(true);
@@ -37,6 +38,7 @@ function Dashboard({ date }) {
   useEffect(loadDashboard, [date]);
   useEffect(loadTables, []);
 
+  // Loads reservations from database on page load
   function loadDashboard() {
     setReservationsLoading(true);
     const abortController = new AbortController();
@@ -52,6 +54,7 @@ function Dashboard({ date }) {
     };
   }
 
+  // Loads tables from database on page load
   function loadTables() {
     const abortController = new AbortController();
     setTablesError(null);
@@ -111,6 +114,7 @@ function Dashboard({ date }) {
     }
   };
 
+  // Formats and displays the date based on query parameter, today if viewing current date
   const getDisplayDate = () => {
     let displayDate = new Date(date.replace(/-/g, "/")).toLocaleDateString(
       "en-US"
@@ -121,6 +125,7 @@ function Dashboard({ date }) {
     return displayDate;
   };
 
+  // Displays loading animation if tables haven't laoded
   const loadedTables = () => {
     return tablesLoading ? (
       <div className="p-3">
@@ -199,6 +204,6 @@ function Dashboard({ date }) {
       {loadedTables()}
     </main>
   );
-}
+};
 
 export default Dashboard;

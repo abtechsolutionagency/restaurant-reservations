@@ -34,7 +34,7 @@ const ReservationList = ({
   };
 
   const displySearchResults = () => {
-    return initialState ? "" : displyReservationList();
+    return initialState ? null : displyReservationList();
   };
 
   if (search) {

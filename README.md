@@ -1,4 +1,4 @@
-# Seatable Restaurant Reservations
+# Thinkful Final Capstone: Seatable Restaurant Reservations
 
 ### [Live Version](https://restaurant-reservation-sk.herokuapp.com/)
 
@@ -18,6 +18,12 @@ It is built using:
 - Boostrap 5
 - CSS
 - Heroku
+
+## To Install Locally
+
+1. Run `npm install`
+2. Copy `.env.sample` in back-end folder and add postgreSQL database links
+3. Run `npm run start:dev` from root folder
 
 ## Front-end Features
 
@@ -58,3 +64,56 @@ Users can look up a reservation by searching for a users phone number. From here
 <img src="screenshots/create-table.png" width="650px">&nbsp;
 
 This form allows users to create a new table. Tables can be named and assigned the amount of people it can seat.
+
+## API Features
+
+Backend deployed at: https://rr-sk-backend.herokuapp.com/
+
+### Routes
+
+#### `/reservations`
+
+- `GET` returns all columns for all reservations in the database
+- `POST` creates a new reservations with the following required fields:
+  - First Name
+  - Last Name
+  - Mobile-Number
+  - Reservation Date
+  - Reservation Time
+  - Number of people in party
+
+#### `/reservations?date=xxxx-xx-xx`
+
+- `GET` returns all columns for all reservations in the database with matching date and status of `booked` or `seated`
+
+#### `/reservations?mobile_number=xxx-xxxx`
+
+- `GET` returns all columns for all reservations in the database with matching phone number
+
+#### `/reservations/:reservation_id`
+
+- `GET` returns all columns for the requested reservation
+- `PUT` updates a new reservations with the following required fields:
+  - First Name
+  - Last Name
+  - Mobile-Number
+  - Reservation Date
+  - Reservation Time
+  - Number of people in party
+
+#### `/reservations/:reservation_id/status`
+
+- `PUT` updates the status of a reservation, including canceling it
+
+#### `/tables`
+
+- `GET` returns all columns for all tables in the database
+- `POST` creates a new table with the following required fields:
+  - Table Name
+  - Capacity
+
+#### `/tables/:table_id/seat`
+
+- `GET` returns all columns for all tables in the database
+- `PUT` updates the reservation_id associated with a table, giving that reservation the status of `seated`:
+- `DELETE` removes a reservation_id from a table, which 'finishes' the table, and sets the status of the previously seated reservation to `finished`
