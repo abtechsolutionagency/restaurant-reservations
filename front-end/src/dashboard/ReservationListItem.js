@@ -100,7 +100,7 @@ const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
             {reservation.people})
           </p>
         </div>
-        <div className="d-flex align-items-xl-center col-5 col-sm-4 col-md-2 col-xl-3 order-md-4 order-xl-3">
+        <div className="d-flex align-items-xl-center col-5 col-sm-4 col-md-3 col-xl-3 order-md-4 order-xl-3">
           <p data-reservation-id-status={reservation_id}>
             <i className="bi bi-clipboard-check me-2"></i>
             {reservation.status[0].toUpperCase() +

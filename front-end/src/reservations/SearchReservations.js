@@ -53,26 +53,31 @@ const SearchReservations = () => {
       <h1 className="my-4">Search Reservations</h1>
       <ErrorAlert error={error} />
       <div className="form-container p-3 p-md-5">
-        <form onSubmit={findButtonHandler}>
-          <div className="form-floating mb-3">
-            <input
-              type="text"
-              name="mobile_number"
-              className="form-control"
-              id="mobile_number"
-              autoComplete={"off"}
-              placeholder={"Enter a customer's phone number"}
-              onChange={handleMobileNumberChange}
-              onKeyDown={handleEnter}
-              value={mobileNumber}
-              required
-            />
-            <label htmlFor="mobile_number" className="form-label">
-              Enter a phone number
-            </label>
+        <form
+          className="d-flex flex-column flex-md-row"
+          onSubmit={findButtonHandler}
+        >
+          <div className="col-12 col-md-7 col-lg-9 mb-2 mb-md-0 pe-md-2">
+            <div className="form-floating">
+              <input
+                type="text"
+                name="mobile_number"
+                className="form-control"
+                id="mobile_number"
+                autoComplete={"off"}
+                placeholder={"Enter a customer's phone number"}
+                onChange={handleMobileNumberChange}
+                onKeyDown={handleEnter}
+                value={mobileNumber}
+                required
+              />
+              <label htmlFor="mobile_number" className="form-label">
+                Enter a phone number
+              </label>
+            </div>
           </div>
-          <div className="d-flex justify-content-end">
-            <div className="col-6 col-md-2 d-flex pe-1">
+          <div className="col-12 col-md-5 col-lg-3 d-flex justify-content-end">
+            <div className="col-6 d-flex pe-1">
               <button
                 className="btn btn-secondary flex-fill"
                 onClick={handleCancel}
@@ -80,9 +85,9 @@ const SearchReservations = () => {
                 Cancel
               </button>
             </div>
-            <div className="col-6 col-md-2 d-flex ps-1">
+            <div className="col-6 d-flex ps-1">
               <button className="btn btn-primary flex-fill" type="submit">
-                Submit
+                Find
               </button>
             </div>
           </div>
