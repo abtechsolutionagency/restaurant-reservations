@@ -2,6 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./ReservationListItem.css";
 
+/**
+ * Defines a reservation returned from the database
+ * @param reservation
+ * A reservation object
+ * @param cancelButtonHandler
+ * Click handler function for cancel button
+ * @returns {JSX.Element}
+ */
 const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
   const reservation_id = reservation.reservation_id;
 

@@ -2,6 +2,20 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 
+/**
+ * Defines the form for creating a table
+ * @param table
+ * A table object
+ * @param error
+ * Error object returned from the server if there is one
+ * @param handleTableNameChange
+ * Change handler function for `table name` input fields
+ * @param handlePeopleNumberChange
+ * Change handler function for `capacity` numeric input to set lower limit of 1
+ * @param handleSubmit
+ * Click handler function to submit infomation from form
+ * @returns {JSX.Element}
+ */
 const TableForm = ({
   table,
   error,

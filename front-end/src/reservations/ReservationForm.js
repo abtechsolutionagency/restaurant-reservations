@@ -2,6 +2,20 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 
+/**
+ * Defines the form for creating or updating a reservation
+ * @param table
+ * A table object
+ * @param error
+ * Error object returned from the server if there is one
+ * @param handleChange
+ * Change handler function for form input fields
+ * @param handlePeopleNumberChange
+ * Change handler function for `people` numeric input to set lower limit of 1
+ * @param handleSubmit
+ * Click handler function to submit infomation from form
+ * @returns {JSX.Element}
+ */
 const ReservationForm = ({
   reservation,
   error,

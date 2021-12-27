@@ -1,5 +1,13 @@
 import React from "react";
 
+/**
+ * Defines a reservation returned from the database
+ * @param table
+ * A table object
+ * @param finishButtonHandler
+ * Click handler function for finish button
+ * @returns {JSX.Element}
+ */
 const TablesListItem = ({ table, finishButtonHandler }) => {
   // Displays table card as filled when reservation is seated
   const tableFilled = () => {

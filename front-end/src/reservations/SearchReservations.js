@@ -95,7 +95,7 @@ const SearchReservations = () => {
         <ReservationList
           reservations={results}
           search={true}
-          searchLoading={searchLoading}
+          reservationsLoading={searchLoading}
           initialState={initialState}
         />
       </div>

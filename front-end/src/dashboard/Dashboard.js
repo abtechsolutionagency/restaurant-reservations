@@ -40,8 +40,8 @@ const Dashboard = ({ date }) => {
 
   // Loads reservations from database on page load
   function loadDashboard() {
-    setReservationsLoading(true);
     const abortController = new AbortController();
+    setReservationsLoading(true);
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(reservations => {

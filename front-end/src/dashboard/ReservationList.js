@@ -2,12 +2,25 @@ import React from "react";
 import LoadingAnimation from "./LoadingAnimation";
 import ReservationListItem from "./ReservationListItem";
 
+/**
+ * Defines the list of reservations returned from the database
+ * @param reservations
+ * A possibly empty array of reservations
+ * @param cancelButtonHandler
+ * Click handler function for cancel button
+ * @param reservationsLoading
+ * Boolean to determine if loading indicator is shown
+ * @param search
+ * Boolean to determine how the list is displayed when used on search page
+ * @param initialState
+ * Boolean to determine if if initial state for search is active
+ * @returns {JSX.Element}
+ */
 const ReservationList = ({
   reservations,
   cancelButtonHandler,
   reservationsLoading,
   search = false,
-  searchLoading = false,
   initialState = true,
 }) => {
   const displayLoading = () => {
@@ -43,7 +56,9 @@ const ReservationList = ({
         <div className="row d-flex flex-column flex-sm-row flex-wrap mb-3">
           <div className="col col-sm-7 d-md-flex flex-column align-items-start"></div>
         </div>
-        <div>{searchLoading ? displayLoading() : displySearchResults()}</div>
+        <div>
+          {reservationsLoading ? displayLoading() : displySearchResults()}
+        </div>
       </div>
     );
   }

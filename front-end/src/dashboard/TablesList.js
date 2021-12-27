@@ -2,6 +2,14 @@ import React from "react";
 import TablesListItem from "./TablesListItem";
 import { useHistory } from "react-router-dom";
 
+/**
+ * Defines the list of tables returned from the database
+ * @param tables
+ * A possibly empty array of tables
+ * @param finishButtonHandler
+ * Click handler function for finish button
+ * @returns {JSX.Element}
+ */
 const TablesList = ({ tables, finishButtonHandler }) => {
   const history = useHistory();
   return (
