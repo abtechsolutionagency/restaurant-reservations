@@ -1,6 +1,6 @@
 # Thinkful Final Capstone: Seatable Restaurant Reservations
 
-### [Live Version](https://restaurant-reservation-sk.herokuapp.com/)
+### [Live Version](https://seatable-sk.herokuapp.com/)
 
 ## Project overview
 

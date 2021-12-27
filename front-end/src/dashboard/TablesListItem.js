@@ -1,10 +1,12 @@
 import React from "react";
 
 const TablesListItem = ({ table, finishButtonHandler }) => {
+  // Displays table card as filled when reservation is seated
   const tableFilled = () => {
+    const tableBaseStyle = `card table-card align-self-stretch flex-fill d-flex flex-column p-3`;
     return table.reservation_id
-      ? "card table-card table-filled align-self-stretch flex-fill d-flex flex-column p-3 "
-      : "card table-card align-self-stretch flex-fill d-flex flex-column p-3 ";
+      ? `table-filled ${tableBaseStyle}`
+      : tableBaseStyle;
   };
 
   return (
