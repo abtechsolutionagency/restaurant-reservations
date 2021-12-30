@@ -32,7 +32,7 @@ const SearchReservations = () => {
     };
   };
 
-  const findButtonHandler = async event => {
+  const findButtonHandler = event => {
     event.preventDefault();
     search();
   };

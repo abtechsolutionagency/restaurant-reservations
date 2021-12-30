@@ -14,6 +14,8 @@ import ReservationListItem from "./ReservationListItem";
  * Boolean to determine how the list is displayed when used on search page
  * @param initialState
  * Boolean to determine if if initial state for search is active
+ * @param hasTables
+ * Boolean to determine if there are any tables to seat guests
  * @returns {JSX.Element}
  */
 const ReservationList = ({
@@ -22,6 +24,7 @@ const ReservationList = ({
   reservationsLoading,
   search = false,
   initialState = true,
+  hasTables,
 }) => {
   const displayLoading = () => {
     return <LoadingAnimation />;
@@ -35,6 +38,7 @@ const ReservationList = ({
             <ReservationListItem
               reservation={reservation}
               cancelButtonHandler={cancelButtonHandler}
+              hasTables={hasTables}
             />
           </div>
         );

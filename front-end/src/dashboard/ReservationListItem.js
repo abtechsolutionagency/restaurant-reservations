@@ -8,9 +8,15 @@ import "./ReservationListItem.css";
  * A reservation object
  * @param cancelButtonHandler
  * Click handler function for cancel button
+ * @param hasTables
+ * Boolean to determine if there are any tables to seat guests
  * @returns {JSX.Element}
  */
-const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
+const ReservationListItem = ({
+  reservation,
+  cancelButtonHandler,
+  hasTables,
+}) => {
   const reservation_id = reservation.reservation_id;
 
   const formatTime = () => {
@@ -54,11 +60,11 @@ const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
             </p>
           </div>
         </div>
-        <div className="col-12 col-md-6 col-xl-4 d-flex flex-row align-items-start align-items-md-center mt-3 mt-md-0">
+        <div className="col-12 col-md-6 col-xl-4 d-flex flex-row align-items-end align-items-md-stretch mt-3 mt-md-0">
           <button
             type="button"
             name="cancel"
-            className="btn btn-text cancel col-4 col-sm-3 col-md-4 text-nowrap pe-1"
+            className="btn btn-text cancel flex-grow-1 text-nowrap"
             data-reservation-id-cancel={reservation.reservation_id}
             onClick={() => cancelButtonHandler(reservation_id)}
           >
@@ -66,7 +72,7 @@ const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
           </button>
           <Link
             to={`/reservations/${reservation_id}/edit`}
-            className="d-flex col-4  px-1"
+            className="d-flex flex-grow-1 px-1"
           >
             <button
               type="button"
@@ -76,18 +82,20 @@ const ReservationListItem = ({ reservation, cancelButtonHandler }) => {
               Edit
             </button>
           </Link>
-          <Link
-            to={`/reservations/${reservation_id}/seat`}
-            className="d-flex col-4 col-sm-5 col-md-4 ps-1"
-          >
-            <button
-              type="button"
-              name="seat"
-              className="btn btn-primary flex-grow-1"
+          {hasTables && (
+            <Link
+              to={`/reservations/${reservation_id}/seat`}
+              className="d-flex flex-grow-1 ps-1"
             >
-              Seat
-            </button>
-          </Link>
+              <button
+                type="button"
+                name="seat"
+                className="btn btn-primary flex-grow-1"
+              >
+                Seat
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     );

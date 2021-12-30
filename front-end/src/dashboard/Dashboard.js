@@ -197,6 +197,7 @@ const Dashboard = ({ date }) => {
           reservations={reservations}
           cancelButtonHandler={cancelButtonHandler}
           reservationsLoading={reservationsLoading}
+          hasTables={!!tables.length}
         />
       </div>
 
