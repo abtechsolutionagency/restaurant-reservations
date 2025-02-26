@@ -28,6 +28,7 @@ const Dashboard = ({ date }) => {
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
   const [tablesLoading, setTablesLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState("");
   const history = useHistory();
   const query = useQuery();
 
@@ -85,6 +86,12 @@ const Dashboard = ({ date }) => {
     setReservationsLoading(true);
     const nextDay = next(date);
     history.push(`/dashboard?date=${nextDay}`);
+  };
+
+  const handleDateChange = (event) => {
+    const pickedDate = event.target.value;
+    setSelectedDate(pickedDate);
+    history.push(`/dashboard?date=${pickedDate}`);
   };
 
   // Handler for finishing table
@@ -180,6 +187,13 @@ const Dashboard = ({ date }) => {
             >
               Next
             </button>
+            <input
+              type="date"
+              className="btn btn-outline-primary flex-sm-grow-0 flex-grow-1"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
+            
           </div>
           <button
             type="button"

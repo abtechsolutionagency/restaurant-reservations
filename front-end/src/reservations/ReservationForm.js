@@ -86,7 +86,6 @@ const ReservationForm = ({
               value={reservation.mobile_number}
               onChange={handleChange}
               onKeyDown={handleEnter}
-              required
             />
             <label htmlFor="mobile_number" className="form-label">
               Mobile Number
@@ -140,6 +139,23 @@ const ReservationForm = ({
             />
             <label htmlFor="people" className="form-label">
               Number of guests in party
+            </label>
+          </div>
+          <div className="form-floating mb-3">
+            <input
+              type="text"
+              name="observation"
+              className="form-control"
+              id="observation"
+              autoComplete={"off"}
+              placeholder={"Customer's first name"}
+              value={reservation.observation}
+              onChange={handleChange}
+              onKeyDown={handleEnter}
+              required
+            />
+            <label htmlFor="observation" className="form-label">
+            Observation
             </label>
           </div>
           <div className="d-flex justify-content-end">
