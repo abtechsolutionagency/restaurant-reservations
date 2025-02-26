@@ -27,7 +27,7 @@ const ReservationListItem = ({
   }, []);
 
   const truncateText = (text, length) => {
-    return text.length > length ? text.substring(0, length) + "..." : text;
+    return  text?.length > length ? text?.substring(0, length) + "..." : text;
   };
   const reservation_id = reservation.reservation_id;
 
