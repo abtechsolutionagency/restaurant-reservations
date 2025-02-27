@@ -27,12 +27,12 @@ const TablesListItem = ({ table, finishButtonHandler }) => {
             {table.capacity}
           </p>
         </div>
-        <p data-table-id-status={table.table_id}>
+        {/* <p data-table-id-status={table.table_id}>
           {table.reservation_id ? "OCCUPIED" : "FREE"}
-        </p>
+        </p> */}
       </div>
 
-      <button
+      {/* <button
         data-table-id-finish={table.table_id}
         type="button"
         className="btn btn-outline-primary mt-3"
@@ -40,7 +40,7 @@ const TablesListItem = ({ table, finishButtonHandler }) => {
         hidden={!table.reservation_id}
       >
         <i className="bi bi-check2-circle me-2"></i>Finish
-      </button>
+      </button> */}
     </div>
   );
 };

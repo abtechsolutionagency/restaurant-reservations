@@ -5,6 +5,7 @@ import {
   finishTable,
   listReservations,
   listTables,
+  updateReservation,
 } from "../utils/api";
 import useQuery from "../utils/useQuery";
 import { next, previous, today } from "../utils/date-time";
@@ -29,6 +30,7 @@ const Dashboard = ({ date }) => {
   const [tablesError, setTablesError] = useState(null);
   const [tablesLoading, setTablesLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState("");
+  const [error, setError] = useState(null);
   const history = useHistory();
   const query = useQuery();
 
@@ -109,6 +111,21 @@ const Dashboard = ({ date }) => {
     }
   };
 
+   const handleUpdateReservation = async (reservation) => {
+      const abortController = new AbortController();
+      let reservation_id = reservation.reservation_id
+      try {
+        await updateReservation(
+          reservation_id,
+          reservation,
+          abortController.signal
+        );
+      } catch (error) {
+        setError(error);
+      }
+      return () => abortController.abort();
+    };
+
   // Handler for canceling a reservation
   const cancelButtonHandler = id => {
     const confirm = window.confirm(
@@ -145,6 +162,7 @@ const Dashboard = ({ date }) => {
 
   return (
     <main className="container-lg">
+      <ErrorAlert error={error} />
       <header className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center flex-wrap px-2 px-md-0 py-4 m-0">
         <h1 className="mb-2">Dashboard</h1>
         <div className="d-flex flex-column">
@@ -212,6 +230,7 @@ const Dashboard = ({ date }) => {
           cancelButtonHandler={cancelButtonHandler}
           reservationsLoading={reservationsLoading}
           hasTables={!!tables.length}
+          handleUpdateReservation={handleUpdateReservation}
         />
       </div>
 

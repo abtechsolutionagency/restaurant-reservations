@@ -25,12 +25,13 @@ const ReservationList = ({
   search = false,
   initialState = true,
   hasTables,
+  handleUpdateReservation,
 }) => {
   const displayLoading = () => {
     return <LoadingAnimation />;
   };
 
-  const displyReservationList = () => {
+  const displyReservationList = (handleUpdateReservation) => {
     return reservations.length ? (
       reservations.map(reservation => {
         return (
@@ -39,6 +40,7 @@ const ReservationList = ({
               reservation={reservation}
               cancelButtonHandler={cancelButtonHandler}
               hasTables={hasTables}
+              handleUpdateReservation={handleUpdateReservation}
             />
           </div>
         );
@@ -50,8 +52,8 @@ const ReservationList = ({
     );
   };
 
-  const displySearchResults = () => {
-    return initialState ? null : displyReservationList();
+  const displySearchResults = (handleUpdateReservation) => {
+    return initialState ? null : displyReservationList(handleUpdateReservation);
   };
 
   if (search) {
@@ -61,7 +63,7 @@ const ReservationList = ({
           <div className="col col-sm-7 d-md-flex flex-column align-items-start"></div>
         </div>
         <div>
-          {reservationsLoading ? displayLoading() : displySearchResults()}
+          {reservationsLoading ? displayLoading() : displySearchResults(handleUpdateReservation)}
         </div>
       </div>
     );
@@ -73,7 +75,7 @@ const ReservationList = ({
         <div className="col col-sm-7 d-md-flex flex-column align-items-start"></div>
       </div>
       <div>
-        {reservationsLoading ? displayLoading() : displyReservationList()}
+        {reservationsLoading ? displayLoading() : displyReservationList(handleUpdateReservation)}
       </div>
     </div>
   );

@@ -152,7 +152,6 @@ const ReservationForm = ({
               value={reservation.observation}
               onChange={handleChange}
               onKeyDown={handleEnter}
-              required
             />
             <label htmlFor="observation" className="form-label">
             Observation
